@@ -48,6 +48,8 @@ If you have some issues referring parts of code in the master branch add them in
 
 * **Simion Robert** (https://github.com/simionrobert)
 * **Dedita Vlad** (https://github.com/vlad.dedita)
+* **Lica Alexandru** (https://github.com/licaalexandru)
+* **Stratulat Adrian** (https://github.com/Adistratulat)
 
 ## License
 
