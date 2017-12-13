@@ -47,7 +47,7 @@ If you have some issues referring parts of code in the master branch add them in
 ## Authors
 
 * **Simion Robert** (https://github.com/simionrobert)
-* **Dedita Vlad** (https://github.com/)
+* **Dedita Vlad** (https://github.com/vlad.dedita)
 
 ## License
 
