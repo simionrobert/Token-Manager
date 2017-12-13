@@ -2,8 +2,18 @@
 Token Manager Project
 
 
+
+
 **Prequesties**:
 -eTPKCS11.dll in C:/Windows/system32
+
+
+
+**How to import in Visual Studio**
+1. On the git page click **Clone or Download** > Open in visual studio
+2. In visual studio click Clone button 
+3. In Solution Explorer double click TokenManager.sln
+4. From now on you can sync with the origin/master when you like.
 
 
 
