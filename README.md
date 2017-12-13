@@ -38,7 +38,17 @@ The same steps will be done with a GUI and the following:
 
 **Build Notes**:
 Error SDK Version: Right click TokenManagerLibrary > Retarget projects
+
 Error Platform Toolset: Right click TokenManagerLibrary > Properties > General > Platform Toolset > Select what toolset you have (same for test)
 
 **Aditional notes:**
 If you have some issues referring parts of code in the master branch add them in the issues section.
+
+## Authors
+
+* **Simion Robert** (https://github.com/simionrobert)
+* **Dedita Vlad** (https://github.com/)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
