@@ -12,7 +12,7 @@ Token Manager Project
 **How to import in Visual Studio**
 1. On the git page click **Clone or Download** > Open in visual studio.
 2. In visual studio click Clone button. 
-3. In Solution Explorer double click TokenManager.sln or you can click on the .sln file direcly in the same window.
+3. In Solution Explorer double click TokenManager.sln or you can click on the .sln file direcly in the clone window (same windows as in the 2-nd step).
 4. From now on you can sync with the origin/master when you like.
 
 
