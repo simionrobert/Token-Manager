@@ -20,7 +20,7 @@
       <UniqueIdentifier>{56fd17cf-8dbc-4e47-8dd0-adfb00c56845}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\classes">
-      <UniqueIdentifier>{b28d9189-2aa4-4fe0-aff3-10f6f5cd2b76}</UniqueIdentifier>
+      <UniqueIdentifier>{a2c311d4-3d52-4700-a78c-d449834aeb2b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -45,10 +45,19 @@
     <ClInclude Include="pkcs11t.h">
       <Filter>Header Files\includes</Filter>
     </ClInclude>
-    <ClInclude Include="defined_tkn_mgr_header.h">
-      <Filter>Header Files\includes</Filter>
-    </ClInclude>
     <ClInclude Include="PKCS11Library.h">
+      <Filter>Header Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="defined_tkn_mgr_header.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TokenSlot.h">
+      <Filter>Header Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="TokenSession.h">
+      <Filter>Header Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="TokenManager.h">
       <Filter>Header Files\classes</Filter>
     </ClInclude>
   </ItemGroup>
@@ -56,11 +65,17 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TokenManagerLibrary.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TokenManager.cpp">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="TokenSession.cpp">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="TokenSlot.cpp">
+      <Filter>Source Files\classes</Filter>
     </ClCompile>
     <ClCompile Include="PKCS11Library.cpp">
       <Filter>Source Files\classes</Filter>

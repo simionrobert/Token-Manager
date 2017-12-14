@@ -7,4 +7,14 @@
 	#define TKN_API __declspec(dllimport)
 #endif
 
+#define MAX_COUNT 20
+
+#define E_BASE 0x200
+#define E_PKCS11_TEST_LIBRARY_NOT_FOUND E_BASE+1
+#define E_PKCS11_TEST_CRYPTOKIFUNCTIONS E_BASE+2
+#define E_PKCS11_TEST_NO_TOKENS_PRESENT E_BASE+3
+#define E_PKCS11_TEST_ALLOC				E_BASE+4
+#define E_PKCS11_TEST_NOT_FOUND			E_BASE+5
+#define E_PKCS11_TEST_IO				E_BASE+6
+
 #endif 

@@ -3,7 +3,7 @@
 #include"PKCS11Library.h"
 
 
-void PKCS11Library::incarcaLibrarie(char * numeLibrarie)
+int PKCS11Library::incarcaLibrarie(char * numeLibrarie)
 {
 	CK_RV rv;
 
@@ -15,7 +15,7 @@ void PKCS11Library::incarcaLibrarie(char * numeLibrarie)
 		printf("EROARE");
 		rv = E_PKCS11_TEST_LIBRARY_NOT_FOUND;
 
-		return;
+		return rv;
 	}
 	printf("OK");
 
@@ -26,7 +26,7 @@ void PKCS11Library::incarcaLibrarie(char * numeLibrarie)
 		printf("\nEROARE adresare C_GetFunctionList");
 		rv = E_PKCS11_TEST_CRYPTOKIFUNCTIONS;
 
-		return;
+		return rv;
 	}
 
 
@@ -36,7 +36,7 @@ void PKCS11Library::incarcaLibrarie(char * numeLibrarie)
 	if (rv != CKR_OK)
 	{
 		printf("EROARE");
-		return;
+		return rv;
 	}
 	printf("OK");
 
@@ -46,20 +46,28 @@ void PKCS11Library::incarcaLibrarie(char * numeLibrarie)
 	if ((rv != CKR_OK) && (rv != CKR_CRYPTOKI_ALREADY_INITIALIZED))
 	{
 		printf("EROARE");
-		return;
+		return rv;
 	}
 	printf("OK\n");
+
+	return CKR_OK;
 }
 
-void PKCS11Library::freeLibrarie()
+int PKCS11Library::freeLibrarie()
 {
-	printf("\nInchidere lucru cu biblioteca PKCS#11.....");
-	pFunctionList->C_Finalize(NULL);
-	pFunctionList = NULL;
-	printf("OK");
+	if (pFunctionList != NULL) {
+		printf("\nInchidere lucru cu biblioteca PKCS#11.....");
+		pFunctionList->C_Finalize(NULL);
+		pFunctionList = NULL;
+		printf("OK");
+	}
 
-	FreeLibrary(hDll);
-	hDll = NULL;
+	if(hDll != NULL){
+		FreeLibrary(hDll);
+		hDll = NULL;
+	}
+
+	return CKR_OK;
 }
 
 CK_FUNCTION_LIST_PTR PKCS11Library::getFunctionList()

@@ -7,6 +7,9 @@ Acest header il folosim in aplicatia principala sau de test
 #define TKN_MNG_DLL
 
 #include "PKCS11Library.h"
+#include "TokenSlot.h"
+#include "TokenSession.h"
+#include "TokenManager.h"
 
 
 #endif
