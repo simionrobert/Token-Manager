@@ -14,7 +14,13 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Header Files\includes">
-      <UniqueIdentifier>{7edf30cc-1322-45f6-9903-bbb84317917b}</UniqueIdentifier>
+      <UniqueIdentifier>{5435c71e-01c2-4072-ac13-14bb1cf9986b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\classes">
+      <UniqueIdentifier>{56fd17cf-8dbc-4e47-8dd0-adfb00c56845}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\classes">
+      <UniqueIdentifier>{b28d9189-2aa4-4fe0-aff3-10f6f5cd2b76}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -22,6 +28,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TokenManagerLibrary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cryptoki.h">
@@ -36,8 +45,11 @@
     <ClInclude Include="pkcs11t.h">
       <Filter>Header Files\includes</Filter>
     </ClInclude>
-    <ClInclude Include="TokenManagerLibrary.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="defined_tkn_mgr_header.h">
+      <Filter>Header Files\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="PKCS11Library.h">
+      <Filter>Header Files\classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +61,9 @@
     </ClCompile>
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PKCS11Library.cpp">
+      <Filter>Source Files\classes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
