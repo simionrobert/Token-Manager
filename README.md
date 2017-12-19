@@ -51,6 +51,8 @@ If you have some issues referring parts of code in the master branch add them in
 * **Lica Alexandru** (https://github.com/licaalexandru)
 * **Stratulat Adrian** (https://github.com/Adistratulat)
 
+* **Honceriu Tudor** (https://github.com/Tudorikass)
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
