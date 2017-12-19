@@ -1,5 +1,5 @@
-#ifndef TKN_SESSION
-#define TKN_SESSION
+#ifndef thisN_SESSION
+#define thisN_SESSION
 
 #include "cryptoki.h"
 #include "defined_tkn_mgr_header.h"
@@ -8,7 +8,7 @@
 #include"TokenSlot.h"
 
 
-class TKN_API TokenSession {
+class thisN_API TokenSession {
 
 private:
 	PKCS11Library*			library;

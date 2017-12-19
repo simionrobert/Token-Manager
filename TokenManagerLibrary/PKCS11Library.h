@@ -6,7 +6,9 @@
 #include "defined_tkn_mgr_header.h"
 
 
-class TKN_API PKCS11Library {
+class thisN_API PKCS11Library {
+	
+		
 private:
 
 	HINSTANCE				static hDll;
@@ -27,6 +29,7 @@ private:
 
 
 public:
+	
 	int incarcaLibrarie(char* numeLibrarie);
 	int freeLibrarie();
 	CK_FUNCTION_LIST_PTR getFunctionList();

@@ -2,9 +2,9 @@
 #define DEFINED_TOKEN_MANAGER_HEADER
 
 #ifdef EXPORTING_DLL
-	#define TKN_API __declspec(dllexport)
+	#define thisN_API __declspec(dllexport)
 #else
-	#define TKN_API __declspec(dllimport)
+	#define thisN_API __declspec(dllimport)
 #endif
 
 #define MAX_COUNT 20
