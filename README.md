@@ -50,7 +50,8 @@ If you have some issues referring parts of code in the master branch add them in
 * **Dedita Vlad** (https://github.com/vladdedita)
 * **Lica Alexandru** (https://github.com/licaalexandru)
 * **Stratulat Adrian** (https://github.com/Adistratulat)
-* **Stratulat Adrian** (https://github.com/Tudorikass)
+
+* **Honceriu Tudor** (https://github.com/Tudorikass)
 
 ## License
 
