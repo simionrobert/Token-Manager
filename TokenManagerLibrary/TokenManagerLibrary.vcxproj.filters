@@ -60,6 +60,9 @@
     <ClInclude Include="TokenManager.h">
       <Filter>Header Files\classes</Filter>
     </ClInclude>
+    <ClInclude Include="TokenKey.h">
+      <Filter>Header Files\classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -78,6 +81,9 @@
       <Filter>Source Files\classes</Filter>
     </ClCompile>
     <ClCompile Include="PKCS11Library.cpp">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="TokenKey.cpp">
       <Filter>Source Files\classes</Filter>
     </ClCompile>
   </ItemGroup>

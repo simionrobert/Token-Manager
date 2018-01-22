@@ -10,6 +10,6 @@ Acest header il folosim in aplicatia principala sau de test
 #include "TokenSlot.h"
 #include "TokenSession.h"
 #include "TokenManager.h"
-
+#include "TokenKey.h"
 
 #endif

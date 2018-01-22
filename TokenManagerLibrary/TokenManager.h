@@ -8,8 +8,10 @@
 #include "TokenSlot.h"
 #include "TokenSession.h"
 
-
-class TKN_API TokenManager {
+/*
+Pentru tudor
+*/
+class TKN_API TokenManager { 
 
 private:
 	// Put here only services which this class uses (maybe not all 3)

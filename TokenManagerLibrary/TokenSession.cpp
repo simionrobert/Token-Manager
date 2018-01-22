@@ -72,3 +72,8 @@ int TokenSession::authentificate(char *p11PinCode)
 
 	return CKR_ARGUMENTS_BAD;
 }
+
+CK_SESSION_HANDLE TokenSession::getSession()
+{
+	return hSession;
+}

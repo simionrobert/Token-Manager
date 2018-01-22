@@ -21,6 +21,8 @@ public:
 	int openSession();
 	int closeSession();
 	int authentificate(char *p11PinCode);
+	
+	CK_SESSION_HANDLE getSession();
 };
 
 #endif
