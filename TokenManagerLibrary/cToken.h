@@ -26,15 +26,11 @@ public:
 
 	char *getHardwareVersion();
 
-
 	char *getLabel();
-
 
 	char *getManufacturerId();
 
-
 	char *getModel();
-
 
 	char *getSerialNumber();
 
