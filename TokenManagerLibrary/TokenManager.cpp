@@ -7,7 +7,6 @@ TokenManager::TokenManager(PKCS11Library * library, TokenSlot * tokenSlot, Token
 	this->library = library;
 	this->tokenSlot = tokenSlot;
 	this->tokenSession = session;
-	this->pFunctionList = library->getFunctionList();
 }
 
 
@@ -56,7 +55,7 @@ int TokenManager::initializeToken(char *p11PinCodeSO)
 	char*label = "new TOKEN";
 	char* PIN = "123qwe!@#QWE";
 	USHORT pinLen = strlen(PIN);
-	rv = pFunctionList->C_InitToken(pSlotList[0], (CK_CHAR_PTR)PIN, pinLen, (CK_UTF8CHAR_PTR)label);
+	rv = this->library->getFunctionList()->C_InitToken(pSlotList[0], (CK_CHAR_PTR)PIN, pinLen, (CK_UTF8CHAR_PTR)label);
 	if (rv != CKR_OK)
 	{
 		printf(" EROARE (status = 0x%08X)", rv);
@@ -73,7 +72,7 @@ int TokenManager::initializePIN(char * NEWp11PinCode)
 	char* PIN = "123qwe!@#";
 	printf("\nInitializare PIN dupa initializarea tokenului..........");
 	USHORT pinLen = strlen(PIN);
-	rv = pFunctionList->C_InitPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)PIN, pinLen);
+	rv = this->library->getFunctionList()->C_InitPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)PIN, pinLen);
 	if (rv != CKR_OK)
 	{
 		printf("EROARE  (status = 0x%08X)", rv);
@@ -86,17 +85,17 @@ int TokenManager::initializePIN(char * NEWp11PinCode)
 int TokenManager::ChangePINAsUser(char * OLDp11PinCode, char * NEWp11PinCode)
 {
 	int rv;
-	printf("\nSchimbare pin.............ca utilizator");
+	printf("\nSchimbare pin.............ca utilizator ");
 	char*PIN = "123qwe!@#QWE";
-	char *newPIN = "1234567890";
+	char *newPIN = "123qwe!@#$qwe";
 	USHORT oldPinLen = strlen(PIN);
 
 
 	USHORT newPinLen = strlen(newPIN);
 
-	rv = (pFunctionList)->C_SetPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)PIN, oldPinLen, (CK_CHAR_PTR)newPIN, newPinLen);
+	rv = this->library->getFunctionList()->C_SetPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)PIN, oldPinLen, (CK_CHAR_PTR)newPIN, newPinLen);
 	if (rv != CKR_OK) {
-		printf("EROARE la schibmare pin");
+		printf("EROARE la schibmare pin (0x%08X)", rv);
 		return 0;
 	}
 	printf("OK");
@@ -115,9 +114,9 @@ int TokenManager::ChangePINAsSO(char * OLDp11PinCode, char * NEWp11PinCode)
 
 	USHORT newPinLen = strlen(newPIN);
 
-	rv = (pFunctionList)->C_SetPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)PIN, oldPinLen, (CK_CHAR_PTR)newPIN, newPinLen);
+	rv = this->library->getFunctionList()->C_SetPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)PIN, oldPinLen, (CK_CHAR_PTR)newPIN, newPinLen);
 	if (rv != CKR_OK) {
-		printf("EROARE la schibmare pin");
+		printf("EROARE la schibmare pin (0x%08X)", rv);
 		return 0;
 	}
 	printf("OK");
