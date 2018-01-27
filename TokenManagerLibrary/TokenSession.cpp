@@ -7,11 +7,14 @@ TokenSession::TokenSession(PKCS11Library * library, TokenSlot* tokenSlot)
 {
 	this->library = library;
 	this->tokenSlot = tokenSlot;
-
+	this->hSession = NULL;
 }
 
 int TokenSession::openSession()
 {
+	if(hSession!=NULL){
+		return hSession;
+	}
 	// deschid o sesiune PKCS11 de lucru cu tokenul (read-write)
 	CK_RV rv;
 	CK_FUNCTION_LIST_PTR pFunctionList = library->getFunctionList();
@@ -45,11 +48,16 @@ int TokenSession::closeSession()
 	return CKR_OK;
 }
 
-int TokenSession::authentificate(char *p11PinCode)
+int TokenSession::authentificateAsUser(char *p11PinCode)
 {
 	// loghez sesiunea(dau codul PIN)
+	p11PinCode = "123qwe!@#QWE";
 	CK_RV	rv;
 	CK_FUNCTION_LIST_PTR pFunctionList = library->getFunctionList();
+
+	if (hSession == NULL) {
+		this->openSession();
+	}
 
 	if (pFunctionList == NULL) {
 		return CKR_CRYPTOKI_NOT_INITIALIZED;
@@ -62,7 +70,7 @@ int TokenSession::authentificate(char *p11PinCode)
 		rv = (pFunctionList)->C_Login(hSession, CKU_USER, (CK_CHAR_PTR)p11PinCode, (USHORT)strlen(p11PinCode));
 		if ((rv != CKR_OK) && (rv != CKR_USER_ALREADY_LOGGED_IN))
 		{
-			printf("Eroare (0x%08X)");
+			printf(" Eroare (0x%08X)");
 			return rv;
 		}
 		printf("OK");
@@ -71,6 +79,31 @@ int TokenSession::authentificate(char *p11PinCode)
 	}
 
 	return CKR_ARGUMENTS_BAD;
+}
+
+int TokenSession::authentificateAsSO(char *p11PinCode) {
+	int rv;
+	
+	if (hSession == NULL) {
+		this->openSession();
+	}
+	CK_FUNCTION_LIST_PTR pFunctionList = library->getFunctionList();
+
+	if (pFunctionList == NULL) {
+		return CKR_CRYPTOKI_NOT_INITIALIZED;
+	}
+	printf("\nAutentificare.............ca SO ");
+	//ca pin am p11PinCode
+	char* PIN = "123qwe!@#QWE";
+	USHORT pinLen = strlen(PIN);
+
+	rv = (pFunctionList)->C_Login(hSession, CKU_SO, (CK_CHAR_PTR)PIN, pinLen);
+	if (rv != CKR_OK && (rv != CKR_USER_ALREADY_LOGGED_IN)) {
+		printf("  EROARE (0x%08X)");
+		return 0;
+	}
+	printf("OK");
+	return 1;
 }
 
 CK_SESSION_HANDLE TokenSession::getSession()

@@ -20,7 +20,8 @@ public:
 
 	int openSession();
 	int closeSession();
-	int authentificate(char *p11PinCode);
+	int authentificateAsUser(char *p11PinCode);
+	int authentificateAsSO(char *p11PinCode);
 	
 	CK_SESSION_HANDLE getSession();
 };
