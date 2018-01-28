@@ -60,7 +60,13 @@
     <ClInclude Include="TokenManager.h">
       <Filter>Header Files\classes</Filter>
     </ClInclude>
-    <ClInclude Include="cToken.h">
+    <ClInclude Include="TokenKey.h">
+      <Filter>Header Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="TokenObject.h">
+      <Filter>Header Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectCertificate.h">
       <Filter>Header Files\classes</Filter>
     </ClInclude>
   </ItemGroup>
@@ -83,7 +89,13 @@
     <ClCompile Include="PKCS11Library.cpp">
       <Filter>Source Files\classes</Filter>
     </ClCompile>
-    <ClCompile Include="cToken.cpp">
+    <ClCompile Include="TokenKey.cpp">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="TokenObject.cpp">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectCertificate.cpp">
       <Filter>Source Files\classes</Filter>
     </ClCompile>
   </ItemGroup>

@@ -2,9 +2,9 @@
 #define DEFINED_TOKEN_MANAGER_HEADER
 
 #ifdef EXPORTING_DLL
-	#define thisN_API __declspec(dllexport)
+	#define TKN_API __declspec(dllexport)
 #else
-	#define thisN_API __declspec(dllimport)
+	#define TKN_API __declspec(dllimport)
 #endif
 
 #define MAX_COUNT 20
@@ -16,18 +16,5 @@
 #define E_PKCS11_TEST_ALLOC				E_BASE+4
 #define E_PKCS11_TEST_NOT_FOUND			E_BASE+5
 #define E_PKCS11_TEST_IO				E_BASE+6
-
-
-//object management
-#define ERR_BASE 9000
-#define ERR_PKCS11_DLL_NOT_FOUND ERR_BASE+1
-#define ERR_CRYPTOKIFUNCTION_NOT_FOUND_IN_DLL ERR_BASE+2
-#define ERR_LIBRARY_LOAD ERR_BASE+ 3	
-#define ERR_INTIALIZATION_FAILED ERR_BASE+4
-#define ERR_FUNCTIONS_NOT_LOADED ERR_BASE+5
-#define ERR_SLOTS_GET_COUNT ERR_BASE+6
-#define ERR_SLOTS_INIT_LIST ERR_BASE+7
-#define ERR_TOKEN_SESSION_START ERR_BASE+8
-#define ERR_TOKEN_LOGIN ERR_BASE + 9
 
 #endif 

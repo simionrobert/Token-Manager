@@ -33,4 +33,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\TokenManagerLibrary\private.pem">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\TokenManagerLibrary\private8.pem">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\TokenManagerLibrary\private8U.pem">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\TokenManagerLibrary\privateU.pem">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>
