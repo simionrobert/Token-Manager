@@ -217,9 +217,9 @@ int RegistryManager::readValueFromRegistry(HKEY hKeyRoot,const char* keyName, co
 	}
 
 	RegCloseKey(hKey);
-	if (valueLenght != NULL) {
-		valueLenght = valueLenghtTemp;
-	}
+
+	valueLenght = valueLenghtTemp/sizeof(DWORD);
+	
 
 	if (dwRet == ERROR_SUCCESS) {
 		printf("\nValue of %s\\%s is %s\n", keyName, valueName, valueData);

@@ -15,6 +15,7 @@ int TokenSession::openSession()
 	if(hSession!=NULL){
 		return hSession;
 	}
+
 	// deschid o sesiune PKCS11 de lucru cu tokenul (read-write)
 	CK_RV rv;
 	CK_FUNCTION_LIST_PTR pFunctionList = library->getFunctionList();
@@ -43,6 +44,7 @@ int TokenSession::closeSession()
 		pFunctionList->C_Logout(hSession);
 		pFunctionList->C_CloseSession(hSession);
 		printf("OK");
+		hSession = NULL;
 	}
 
 	return CKR_OK;
