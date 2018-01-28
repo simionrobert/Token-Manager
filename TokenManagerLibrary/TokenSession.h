@@ -13,7 +13,7 @@ class TKN_API TokenSession {
 private:
 	PKCS11Library*			library;
 	TokenSlot*				tokenSlot;
-	CK_SESSION_HANDLE		hSession = -1;
+    CK_SESSION_HANDLE		hSession ;
 
 public:
 	TokenSession(PKCS11Library* library, TokenSlot* tokenSlot);

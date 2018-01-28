@@ -2,6 +2,7 @@
 
 #include "stdafx.h"
 #define EXPORTING_DLL
+#include "cryptoki.h"
 
 class cToken {
 

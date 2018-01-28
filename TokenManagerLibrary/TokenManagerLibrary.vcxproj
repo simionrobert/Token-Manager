@@ -29,7 +29,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -89,12 +89,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;TOKENMANAGERLIBRARY_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\zolly\Source\Repos\Token-Manager\TokenManagerLibrary\Libraries\Build-OpenSSL-VC-32-dbg\include;%(AdditionalIncludeDirectories);C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\TokenManagerLibrary\Libraries\Build-OpenSSL-VC-32-dbg\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\zolly\Source\Repos\Token-Manager\TokenManagerLibrary\Libraries\Build-OpenSSL-VC-32-dbg\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\zolly\Source\Repos\Token-Manager\TokenManagerLibrary\Libraries\Build-OpenSSL-VC-32-dbg\lib;%(AdditionalLibraryDirectories);C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\TokenManagerLibrary\Libraries\Build-OpenSSL-VC-32-dbg\bin;C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\TokenManagerLibrary\Libraries\Build-OpenSSL-VC-32-dbg\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\zolly\Source\Repos\Token-Manager\TokenManagerLibrary\Libraries\Build-OpenSSL-VC-32-dbg\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="cryptoki.h" />
     <ClInclude Include="defined_tkn_mgr_header.h" />
+    <ClInclude Include="ObjectCertificate.h" />
     <ClInclude Include="pkcs11.h" />
     <ClInclude Include="pkcs11f.h" />
     <ClInclude Include="PKCS11Library.h" />
@@ -164,11 +165,14 @@
     <ClInclude Include="TokenKey.h" />
     <ClInclude Include="TokenManager.h" />
     <ClInclude Include="TokenManagerLibrary.h" />
+    <ClInclude Include="TokenObject.h" />
     <ClInclude Include="TokenSession.h" />
     <ClInclude Include="TokenSlot.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cToken.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="ObjectCertificate.cpp" />
     <ClCompile Include="PKCS11Library.cpp" />
     <ClCompile Include="RegistryManager.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -179,6 +183,7 @@
     </ClCompile>
     <ClCompile Include="TokenKey.cpp" />
     <ClCompile Include="TokenManager.cpp" />
+    <ClCompile Include="TokenObject.cpp" />
     <ClCompile Include="TokenSession.cpp" />
     <ClCompile Include="TokenSlot.cpp" />
   </ItemGroup>

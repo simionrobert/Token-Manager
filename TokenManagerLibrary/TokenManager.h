@@ -25,19 +25,19 @@ private:
 	Certs
 	*/
 
-	TokenObject **objectList = NULL;
-	size_t objectCount = 0;
+    TokenObject **objectList ;
+    size_t objectCount ;
 
 public:
 	TokenManager(PKCS11Library* library, TokenSlot* tokenSlot, TokenSession* session);
 
 	int ChangePINAsUser(char *OLDp11PinCode, char *NEWp11PinCode);
 	int ChangePINAsSO(char *OLDp11PinCode, char *NEWp11PinCode);
-	int formatToken();
-	int changePINasUSER();
-	int changePINasSO();
-	int unblockPIN();
-	int initializeToken(char *p11PinCodeSO);
+	int formatToken(char* SOPIN, char* label, char* newPIN);
+	int changePINasUSER(char*userPIN, char*newPIN);
+	int changePINasSO(char*soPIN, char*newPIN);
+	int unblockPIN(char* soPIN, char*newPIN);
+	int initializeToken(char *p11PinCodeSO, char* label);
 	int initializePIN(char *NEWp11PinCode);
 
 

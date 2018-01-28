@@ -292,52 +292,51 @@ err:
 }
 
 
-int TokenManager::formatToken()
+int TokenManager::formatToken(char* SOPIN, char* label, char* newPIN)
 {
 	//return CKR_OK if ok; else return sth !=CKR_OK
-	this->initializeToken("test");
+	this->initializeToken(SOPIN, label);
 	this->tokenSession->openSession();
-	this->tokenSession->authentificateAsSO("test");
-	this->initializePIN("test");
+	this->tokenSession->authentificateAsSO(SOPIN);
+	this->initializePIN(newPIN);
 	return 1;
 }
 
-int TokenManager::changePINasUSER()
+int TokenManager::changePINasUSER(char*userPIN,char*newPIN)
 {
 	//return CKR_OK if ok; else return sth !=CKR_OK
 	this->tokenSession->openSession();
-	this->tokenSession->authentificateAsUser("test");
-	this->ChangePINAsUser("test", "Test");
+	this->tokenSession->authentificateAsUser(userPIN);
+	this->ChangePINAsUser(userPIN, newPIN);
 	return 1;
 }
 
-int TokenManager::changePINasSO()
+int TokenManager::changePINasSO(char*soPIN, char*newPIN)
 {
 	//return CKR_OK if ok; else return sth !=CKR_OK
 	this->tokenSession->openSession();
-	this->tokenSession->authentificateAsSO("test");
-	this->ChangePINAsSO("test", "Test");
+	this->tokenSession->authentificateAsSO(soPIN);
+	this->ChangePINAsSO(soPIN, newPIN);
 	return 1;
 }
 
-int TokenManager::unblockPIN()
+int TokenManager::unblockPIN(char* soPIN,char*newPIN)
 {
 	//return CKR_OK if ok; else return sth !=CKR_OK
 	this->tokenSession->openSession();
-	this->tokenSession->authentificateAsSO("test");
-	this->initializePIN("test");
+	this->tokenSession->authentificateAsSO(soPIN);
+	this->initializePIN(newPIN);
 	return 1;
 }
 
-int TokenManager::initializeToken(char *p11PinCodeSO)
+int TokenManager::initializeToken(char *p11PinCodeSO,char* label)
 {
 	CK_SLOT_ID_PTR pSlotList = tokenSlot->getSlotList();
 	printf("\nInitializare token.......... ");
 	int rv;
-	char*label = "new TOKEN";
-	char* PIN = "123qwe!@#QWE";
-	USHORT pinLen = strlen(PIN);
-	rv = this->library->getFunctionList()->C_InitToken(pSlotList[0], (CK_CHAR_PTR)PIN, pinLen, (CK_UTF8CHAR_PTR)label);
+
+	USHORT pinLen = strlen(p11PinCodeSO);
+	rv = this->library->getFunctionList()->C_InitToken(pSlotList[0], (CK_CHAR_PTR)p11PinCodeSO, pinLen, (CK_UTF8CHAR_PTR)label);
 	if (rv != CKR_OK)
 	{
 		printf(" EROARE (status = 0x%08X)", rv);
@@ -351,10 +350,10 @@ int TokenManager::initializePIN(char * NEWp11PinCode)
 {
 	//sa fiu logat ca so intai
 	int rv;
-	char* PIN = "123qwe!@#";
+	
 	printf("\nInitializare PIN dupa initializarea tokenului..........");
-	USHORT pinLen = strlen(PIN);
-	rv = this->library->getFunctionList()->C_InitPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)PIN, pinLen);
+	USHORT pinLen = strlen(NEWp11PinCode);
+	rv = this->library->getFunctionList()->C_InitPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)NEWp11PinCode, pinLen);
 	if (rv != CKR_OK)
 	{
 		printf("EROARE  (status = 0x%08X)", rv);
@@ -368,14 +367,13 @@ int TokenManager::ChangePINAsUser(char * OLDp11PinCode, char * NEWp11PinCode)
 {
 	int rv;
 	printf("\nSchimbare pin.............ca utilizator ");
-	char*PIN = "123qwe!@#QWE";
-	char *newPIN = "123qwe!@#$qwe";
-	USHORT oldPinLen = strlen(PIN);
+
+	USHORT oldPinLen = strlen(OLDp11PinCode);
 
 
-	USHORT newPinLen = strlen(newPIN);
+	USHORT newPinLen = strlen(NEWp11PinCode);
 
-	rv = this->library->getFunctionList()->C_SetPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)PIN, oldPinLen, (CK_CHAR_PTR)newPIN, newPinLen);
+	rv = this->library->getFunctionList()->C_SetPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)OLDp11PinCode, oldPinLen, (CK_CHAR_PTR)NEWp11PinCode, newPinLen);
 	if (rv != CKR_OK) {
 		printf("EROARE la schibmare pin (0x%08X)", rv);
 		return 0;
@@ -389,14 +387,13 @@ int TokenManager::ChangePINAsSO(char * OLDp11PinCode, char * NEWp11PinCode)
 {
 	int rv;
 	printf("\nSchimbare pin.............ca SO ");
-	char*PIN = "123qwe!@#QWE";
-	char *newPIN = "1234567890";
-	USHORT oldPinLen = strlen(PIN);
+
+	USHORT oldPinLen = strlen(OLDp11PinCode);
 
 
-	USHORT newPinLen = strlen(newPIN);
+	USHORT newPinLen = strlen(NEWp11PinCode);
 
-	rv = this->library->getFunctionList()->C_SetPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)PIN, oldPinLen, (CK_CHAR_PTR)newPIN, newPinLen);
+	rv = this->library->getFunctionList()->C_SetPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)OLDp11PinCode, oldPinLen, (CK_CHAR_PTR)NEWp11PinCode, newPinLen);
 	if (rv != CKR_OK) {
 		printf("EROARE la schibmare pin (0x%08X)", rv);
 		return 0;

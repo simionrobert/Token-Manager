@@ -51,10 +51,8 @@ int TokenSession::closeSession()
 }
 
 int TokenSession::authentificateAsUser(char *p11PinCode)
-
 {
-	// loghez sesiunea(dau codul PIN)
-	//p11PinCode = "123qwe!@#QWE";
+
 	CK_RV	rv;
 	CK_FUNCTION_LIST_PTR pFunctionList = library->getFunctionList();
 
@@ -96,11 +94,11 @@ int TokenSession::authentificateAsSO(char *p11PinCode) {
 		return CKR_CRYPTOKI_NOT_INITIALIZED;
 	}
 	printf("\nAutentificare.............ca SO ");
-	//ca pin am p11PinCode
-	char* PIN = "123qwe!@#QWE";
-	USHORT pinLen = strlen(PIN);
+	
+	
+	USHORT pinLen = strlen(p11PinCode);
 
-	rv = (pFunctionList)->C_Login(hSession, CKU_SO, (CK_CHAR_PTR)PIN, pinLen);
+	rv = (pFunctionList)->C_Login(hSession, CKU_SO, (CK_CHAR_PTR)p11PinCode, pinLen);
 	if (rv != CKR_OK && (rv != CKR_USER_ALREADY_LOGGED_IN)) {
 		printf("  EROARE (0x%08X)");
 		return 0;
