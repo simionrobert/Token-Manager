@@ -13,6 +13,10 @@ class TKN_API ObjectCertificate {
 private:
 
 
+	CK_SESSION_HANDLE hSession;
+	CK_OBJECT_HANDLE hObject;
+	CK_C_GetAttributeValue pC_GetAttributeValue;
+
 	char *publicKey;
 	char *subject;
 	char *issuer;
@@ -20,10 +24,14 @@ private:
 	char *version;
 	char *signatureAlgo;
 	char *validity;
+	char *pem;
+
 
 
 public:
-	ObjectCertificate(char *certData, int len);
+
+	ObjectCertificate(CK_SESSION_HANDLE session, CK_OBJECT_HANDLE obj);
+
 	char* getPublicKey();
 	char* getSubject();
 	char *getIssuer();
@@ -31,6 +39,9 @@ public:
 	char *getVersion();
 	char* getSignatureAlgo();
 	char *getValidityPeriod();
+	char *getPem();
+
+
 
 };
 

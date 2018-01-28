@@ -44,6 +44,11 @@ char * ObjectCertificate::getValidityPeriod()
 	return validity;
 }
 
+char * ObjectCertificate::getPem()
+{
+	return pem;
+}
+
 
 
 char* parsePublicKey(X509 *cert)
@@ -216,26 +221,6 @@ char * parseValidityPeriod(X509 *cert) {
 
 }
 
-
-ObjectCertificate::ObjectCertificate(char *certData, int len)
-{
-	X509 *cert;
-
-	cert = d2i_X509(NULL, (const unsigned char**)&certData, len);
-	assert(cert != NULL);
-	
-	publicKey = parsePublicKey(cert);
-	subject = parseSubject(cert);
-	issuer = parseIssuer(cert);
-	fingerprint = parseSHAFingerprint(cert);
-	version = parseVersion(cert);
-	validity = parseValidityPeriod(cert);
-	signatureAlgo = parseSignatureAlgo(cert);
-
-}
-
-
-
 char *X509_to_PEM(X509 *cert) {
 
 	BIO *bio = NULL;
@@ -266,3 +251,55 @@ char *X509_to_PEM(X509 *cert) {
 	BIO_free(bio);
 	return pem;
 }
+
+ObjectCertificate::ObjectCertificate(CK_SESSION_HANDLE session, CK_OBJECT_HANDLE obj)
+{
+	hSession = session;
+	hObject = obj;
+	pC_GetAttributeValue = (CK_C_GetAttributeValue)PKCS11Library::getFunction("C_GetAttributeValue");
+
+
+
+
+
+	CK_ATTRIBUTE valueTemplate[]{
+		{
+			CKA_VALUE,NULL,0
+		}
+	};
+
+
+	CK_RV rv = CKR_OK;
+	CK_BYTE_PTR value;
+	CK_ULONG value_len;
+
+
+	rv = pC_GetAttributeValue(this->hSession, this->hObject, &valueTemplate[0], sizeof(valueTemplate) / sizeof(CK_ATTRIBUTE));
+
+	value_len = (CK_ULONG)valueTemplate[0].ulValueLen;
+	value = new BYTE[value_len];
+	valueTemplate[0].pValue = value;
+
+	rv = pC_GetAttributeValue(this->hSession, this->hObject, &valueTemplate[0], sizeof(valueTemplate) / sizeof(CK_ATTRIBUTE));
+
+
+	X509 *cert;
+
+	cert = d2i_X509(NULL, (const unsigned char**)&value, value_len);
+	assert(cert != NULL);
+
+
+
+
+	publicKey = parsePublicKey(cert);
+	subject = parseSubject(cert);
+	issuer = parseIssuer(cert);
+	fingerprint = parseSHAFingerprint(cert);
+	version = parseVersion(cert);
+	validity = parseValidityPeriod(cert);
+	signatureAlgo = parseSignatureAlgo(cert);
+	pem = X509_to_PEM(cert);
+
+
+}
+

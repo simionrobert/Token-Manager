@@ -25,8 +25,8 @@ private:
 	Certs
 	*/
 
-    TokenObject **objectList ;
-    size_t objectCount ;
+    ObjectCertificate **certList ;
+    size_t certCount ;
 
 public:
 	TokenManager(PKCS11Library* library, TokenSlot* tokenSlot, TokenSession* session);
@@ -45,8 +45,13 @@ public:
 	///////////////////////////ded//////////////////////////////////////////
 
 	CK_RV retrieveTokenObjects();
-	TokenObject** getObjects();
-	size_t getObjectCount();
+	ObjectCertificate** getCertificates();
+	size_t getCertificatesCount();
+
+
+
+
+	
 	int numaraObiecteCertificat(CK_SESSION_HANDLE		hSession);
 	CK_OBJECT_HANDLE_PTR getObiecteCertificat(CK_SESSION_HANDLE		hSession);
 	CK_ATTRIBUTE* getAttribute(CK_OBJECT_HANDLE hObject, CK_SESSION_HANDLE session, CK_ATTRIBUTE* templateAttributeInitial, int len);

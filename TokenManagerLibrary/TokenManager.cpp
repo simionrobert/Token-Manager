@@ -15,8 +15,8 @@
 TokenManager::TokenManager(PKCS11Library * library, TokenSlot * tokenSlot, TokenSession * session)
 {
 
-	objectList = NULL;
-	objectCount = 0;
+	certList = NULL;
+	certCount = 0;
 	assert(library != NULL);
 	this->library = library;
 	this->tokenSlot = tokenSlot;
@@ -116,6 +116,8 @@ CK_OBJECT_HANDLE* TokenManager::getObiecteCertificat(CK_SESSION_HANDLE		hSession
 
 	return certificate;
 }
+
+
 CK_ATTRIBUTE* TokenManager::getAttribute(CK_OBJECT_HANDLE hObject, CK_SESSION_HANDLE session, CK_ATTRIBUTE* templateAttributeInitial, int len)
 {
 	CK_RV rv;
@@ -406,9 +408,12 @@ int TokenManager::ChangePINAsSO(char * OLDp11PinCode, char * NEWp11PinCode)
 
 CK_RV TokenManager::retrieveTokenObjects() {
 
+	//Retrieve certs
+	//Retrieve keys
+	//etc
+
+
 	CK_RV rv = CKR_OK;
-
-
 
 	CK_OBJECT_CLASS		certClass = CKO_CERTIFICATE;
 	CK_CERTIFICATE_TYPE certType = CKC_X_509;
@@ -470,19 +475,19 @@ CK_RV TokenManager::retrieveTokenObjects() {
 		printf("\nRetrieving object %d...", i);
 
 
-		if (objectList == NULL)
+		if (certList == NULL)
 		{
-			objectList = (TokenObject**)malloc(objectFound * sizeof(TokenObject*));
-		}			
-		
-		assert(objectList != NULL_PTR);
+			certList = (ObjectCertificate**)malloc(objectFound * sizeof(ObjectCertificate*));
+		}
 
-		objectList[i] = (TokenObject *)malloc(sizeof(TokenObject));
-		objectList[i] = new TokenObject(tokenSession->getSession(), hObject[i]);
-			
-		
+		assert(certList != NULL_PTR);
+
+		certList[i] = (ObjectCertificate *)malloc(sizeof(ObjectCertificate));
+		certList[i] = new ObjectCertificate(tokenSession->getSession(), hObject[i]);
+
+
 	}
-	objectCount = objectFound;
+	certCount = objectFound;
 	printf("\nClosing finding session...");
 	rv = this->pFunctionList->C_FindObjectsFinal(tokenSession->getSession());
 	if (rv != CKR_OK)
@@ -494,14 +499,16 @@ CK_RV TokenManager::retrieveTokenObjects() {
 	printf("OK");
 
 
+
+
 }
 
-TokenObject **TokenManager::getObjects()
+ObjectCertificate **TokenManager::getCertificates()
 {
-	return objectList;
+	return certList;
 }
 
-size_t TokenManager::getObjectCount()
+size_t TokenManager::getCertificatesCount()
 {
-	return objectCount;
+	return certCount;
 }
