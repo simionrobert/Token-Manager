@@ -14,9 +14,17 @@
 
 TokenManager::TokenManager(PKCS11Library * library, TokenSlot * tokenSlot, TokenSession * session)
 {
+
+	objectList = NULL;
+	objectCount = 0;
+	assert(library != NULL);
 	this->library = library;
 	this->tokenSlot = tokenSlot;
 	this->tokenSession = session;
+
+	this->pFunctionList = library->getFunctionList();
+	assert(this->pFunctionList != NULL);
+
 }
 
 int TokenManager::numaraObiecteCertificat(CK_SESSION_HANDLE		hSession)
@@ -395,4 +403,108 @@ int TokenManager::ChangePINAsSO(char * OLDp11PinCode, char * NEWp11PinCode)
 	}
 	printf("OK");
 	return 1;
+}
+
+
+
+CK_RV TokenManager::retrieveTokenObjects() {
+
+	CK_RV rv = CKR_OK;
+
+
+
+	CK_OBJECT_CLASS		certClass = CKO_CERTIFICATE;
+	CK_CERTIFICATE_TYPE certType = CKC_X_509;
+	CK_BBOOL			isToken = true;
+	CK_BYTE_PTR			subject = NULL_PTR;
+	CK_BYTE_PTR			id = NULL_PTR;
+	CK_BYTE				certificateValue[2048];
+
+	CK_BYTE_PTR value;
+	CK_ULONG value_len;
+
+	CK_OBJECT_HANDLE	hObject[MAX_COUNT]; // Found objects handlers
+	CK_ULONG			objectFound = 0;
+
+
+
+	//Searching template
+	CK_ATTRIBUTE objTemplate[]{
+
+		{
+			CKA_CLASS ,&certClass,sizeof(certClass)
+		},
+		{
+			CKA_TOKEN, &isToken, sizeof(isToken)
+		}
+
+	};
+
+
+	printf("\nSearching for objects...");
+	rv = this->pFunctionList->C_FindObjectsInit(tokenSession->getSession(),
+		objTemplate,
+		2);
+
+	if (rv != CKR_OK)
+	{
+		printf("ERROR Init 0x%08x", rv);
+		return rv;
+	}
+
+	rv = this->pFunctionList->C_FindObjects(tokenSession->getSession(),
+		hObject,
+		MAX_COUNT,
+		&objectFound);
+
+	if (rv != CKR_OK)
+	{
+		printf("ERROR Search");
+		return rv;
+	}
+	printf("found %d objects", objectFound);
+
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////		Cert search 		////////////////////////////////////////////////////////////
+
+	for (int i = 0; i < objectFound; i++)
+	{
+		printf("\nRetrieving object %d...", i);
+
+
+		if (objectList == NULL)
+		{
+			objectList = (TokenObject**)malloc(objectFound * sizeof(TokenObject*));
+		}			
+		
+		assert(objectList != NULL_PTR);
+
+		objectList[i] = (TokenObject *)malloc(sizeof(TokenObject));
+		objectList[i] = new TokenObject(tokenSession->getSession(), hObject[i]);
+			
+		
+	}
+	objectCount = objectFound;
+	printf("\nClosing finding session...");
+	rv = this->pFunctionList->C_FindObjectsFinal(tokenSession->getSession());
+	if (rv != CKR_OK)
+	{
+		printf("ERROR Final");
+		return rv;
+
+	}
+	printf("OK");
+
+
+}
+
+TokenObject **TokenManager::getObjects()
+{
+	return objectList;
+}
+
+size_t TokenManager::getObjectCount()
+{
+	return objectCount;
 }

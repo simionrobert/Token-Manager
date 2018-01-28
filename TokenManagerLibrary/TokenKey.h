@@ -12,8 +12,8 @@ private:
 	PKCS11Library*	library;
 	TokenSession *	tokenSession;
 public:
-	TokenKey(PKCS11Library*	library, TokenSession *	tokenSession);
 
+	TokenKey(PKCS11Library*	library, TokenSession *	tokenSession);
 	int importKeyOnToken(const char * fileName, const char * password);
 };
 
