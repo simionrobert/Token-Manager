@@ -3,6 +3,7 @@ Token Manager Project
 
 
 
+
 **Prequesties**:
 - eTPKCS11.dll in C:/Windows/system32
 - github extension for visual studio
@@ -53,14 +54,3 @@ If you have some issues referring parts of code in the master branch add them in
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-=======
-Include OpenSSL
-
-1.Configuration Properties => C/C++ => General => Additional Include directories. 
-Here you list out the "include" directories that you want searched and made available.
-
-2.Configuration Properties => Linker => General => Additional Library directories. 
-Here you list out the "lib" directories that you want to be searched and made available.
-
-3.Configuration Properties => Linker => Input => Additional dependencies. 
-Here you explicitly specify the .lib files that want to include.
