@@ -2,6 +2,8 @@
 #define EXPORTING_DLL
 #include"PKCS11Library.h"
 
+HINSTANCE PKCS11Library::hDll = NULL;
+
 
 int PKCS11Library::incarcaLibrarie(char * numeLibrarie)
 {
@@ -75,5 +77,10 @@ CK_FUNCTION_LIST_PTR PKCS11Library::getFunctionList()
 	if(this->pFunctionList != NULL)
 		return this->pFunctionList;
 	return NULL;
+}
+
+CK_VOID_PTR PKCS11Library::getFunction(LPCSTR functionName)
+{
+	return GetProcAddress(hDll, functionName);
 }
 

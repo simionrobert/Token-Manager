@@ -13,7 +13,11 @@ private:
 	PKCS11Library*	library;
 
     CK_SLOT_ID_PTR	pSlotList;
+
 	CK_ULONG		ulSlotCount;
+
+
+
 
 public:
 	TokenSlot(PKCS11Library* library);

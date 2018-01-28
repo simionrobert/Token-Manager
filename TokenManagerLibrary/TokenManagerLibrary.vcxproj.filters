@@ -63,7 +63,14 @@
     <ClInclude Include="TokenKey.h">
       <Filter>Header Files\classes</Filter>
     </ClInclude>
+
+    <ClInclude Include="TokenObject.h">
+      <Filter>Header Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectCertificate.h">
+
     <ClInclude Include="RegistryManager.h">
+
       <Filter>Header Files\classes</Filter>
     </ClInclude>
   </ItemGroup>
@@ -89,7 +96,14 @@
     <ClCompile Include="TokenKey.cpp">
       <Filter>Source Files\classes</Filter>
     </ClCompile>
+
+    <ClCompile Include="TokenObject.cpp">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectCertificate.cpp">
+
     <ClCompile Include="RegistryManager.cpp">
+
       <Filter>Source Files\classes</Filter>
     </ClCompile>
   </ItemGroup>

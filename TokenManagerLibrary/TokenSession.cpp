@@ -49,9 +49,12 @@ int TokenSession::closeSession()
 }
 
 int TokenSession::authentificateAsUser(char *p11PinCode)
+
 {
+
 	printf(p11PinCode);
 	// loghez sesiunea(dau codul PIN)
+
 	CK_RV	rv;
 	CK_FUNCTION_LIST_PTR pFunctionList = library->getFunctionList();
 
@@ -70,7 +73,9 @@ int TokenSession::authentificateAsUser(char *p11PinCode)
 		rv = (pFunctionList)->C_Login(hSession, CKU_USER, (CK_CHAR_PTR)p11PinCode, (USHORT)strlen(p11PinCode));
 		if ((rv != CKR_OK) && (rv != CKR_USER_ALREADY_LOGGED_IN))
 		{
-			printf("Eroaree");
+
+			printf(" Eroare (0x%08X)",rv);
+
 			return rv;
 		}
 		printf("OK");

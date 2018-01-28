@@ -3,14 +3,19 @@
 
 #include "cryptoki.h"
 #include "defined_tkn_mgr_header.h"
-
 #include "PKCS11Library.h"
-#include "TokenSlot.h"
 #include "TokenSession.h"
+#include "TokenObject.h"
+/*
+Pentru tudor
+*/
+
+
 
 /*
 Pentru tudor
 */
+
 class TKN_API TokenManager { 
 
 private:
@@ -19,6 +24,17 @@ private:
 	TokenSlot*		tokenSlot;
 	TokenSession*	tokenSession;
 	CK_FUNCTION_LIST_PTR pFunctionList;
+
+
+
+	/*
+	Certs
+	*/
+
+	TokenObject **objectList = NULL;
+	size_t objectCount = 0;
+
+
 
 public:
 	TokenManager(PKCS11Library* library, TokenSlot* tokenSlot, TokenSession* session);
@@ -31,6 +47,17 @@ public:
 	int unblockPIN(char*,char*);
 	int initializeToken(char *p11PinCodeSO,char* label);
 	int initializePIN(char *NEWp11PinCode);
+
+
+
+	//////////////////////////////////////////////////////////////////////////
+	///////////////////////////ded//////////////////////////////////////////
+
+	CK_RV retrieveTokenObjects();
+	TokenObject** getObjects();
+	size_t getObjectCount();
+
+
 };
 
 
