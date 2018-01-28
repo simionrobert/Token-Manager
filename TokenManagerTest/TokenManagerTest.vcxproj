@@ -168,6 +168,12 @@
     </ClCompile>
     <ClCompile Include="TokenManagerTest.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\TokenManagerLibrary\private.pem" />
+    <None Include="..\TokenManagerLibrary\private8.pem" />
+    <None Include="..\TokenManagerLibrary\private8U.pem" />
+    <None Include="..\TokenManagerLibrary\privateU.pem" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

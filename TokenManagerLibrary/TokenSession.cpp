@@ -62,7 +62,7 @@ int TokenSession::authentificate(char *p11PinCode)
 		rv = (pFunctionList)->C_Login(hSession, CKU_USER, (CK_CHAR_PTR)p11PinCode, (USHORT)strlen(p11PinCode));
 		if ((rv != CKR_OK) && (rv != CKR_USER_ALREADY_LOGGED_IN))
 		{
-			printf("Eroare (0x%08X)");
+			printf("Eroare");
 			return rv;
 		}
 		printf("OK");
