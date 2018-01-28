@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #define EXPORTING_DLL
 #include "TokenKey.h"
+
 #include"openssl\rsa.h"
 #include"openssl\pem.h"
 #include"openssl\bn.h"
@@ -20,24 +21,10 @@ void _hex_print(unsigned char *buffer, unsigned int len)
 	fprintf(stdout, "\n");
 }
 
-RSA * _readPrivateKeyPKCS1(const char * keyFile, bool isPublic, const char * password)
-{
-	/*Openssl generate public key in PKCS#8 format
-	PEM_read_RSAPublicKey() reads as PKCS#1 format
-	PEM_read_RSA_PUBKEY() reads PKCS#8*/
 
-	RSA*key = NULL;
-	FILE*fp = fopen(keyFile, "rt");	/***!!! p,q,e,d date-nu sunt random sunt in fisier. Ele au fost random la momentul generarii */
 
-	if (isPublic)
-		key = PEM_read_RSA_PUBKEY(fp, NULL, NULL, (void*)password); //always PKCS8 format
-	else
-		key = PEM_read_RSAPrivateKey(fp, NULL, NULL, (void*)password);
-	fclose(fp);
+EVP_PKEY * _readPrivateKey(const char * keyFile, bool isPublic, const char * password)
 
-	return key;
-}
-EVP_PKEY * _readPrivateKeyPKCS8(const char * keyFile, bool isPublic, const char * password)
 {
 
 	/*By default, open ssl generate public key in PKCS#8 format
@@ -64,36 +51,58 @@ int importRSAKeyToToken(PKCS11Library * library, TokenSession* tokenSession, EVP
 	BIGNUM* modulusBN = rsakey8->pkey.rsa->n;
 	CK_BYTE modulus[2048 / 8];
 	BN_bn2bin(modulusBN, modulus);
-	_hex_print(modulus, 2048 / 8);
+
+	//_hex_print(modulus, 2048 / 8);
+
 
 	BIGNUM* publicExponentBN = rsakey8->pkey.rsa->e;
 	CK_BYTE publicExponent[2048 / 8];
 	BN_bn2bin(publicExponentBN, publicExponent);
-	_hex_print(publicExponent, 2048 / 8);
+
+	//_hex_print(publicExponent, 2048 / 8);
+
 
 	BIGNUM* privateExponentBN = rsakey8->pkey.rsa->d;
 	CK_BYTE privateExponent[2048 / 8];
 	BN_bn2bin(privateExponentBN, privateExponent);
 
+	//_hex_print(privateExponent, 2048 / 8);
+
+
 	BIGNUM* prime1BN = rsakey8->pkey.rsa->p;
 	CK_BYTE prime1[2048 / 8];
 	BN_bn2bin(prime1BN, prime1);
+
+	//_hex_print(prime1, 2048 / 8);
+
 
 	BIGNUM* prime2BN = rsakey8->pkey.rsa->q;
 	CK_BYTE prime2[2048 / 8];
 	BN_bn2bin(prime2BN, prime2);
 
+	//_hex_print(prime2, 2048 / 8);
+
+
 	BIGNUM* exponent1BN = rsakey8->pkey.rsa->dmp1;
 	CK_BYTE exponent1[2048 / 8];
 	BN_bn2bin(exponent1BN, exponent1);
+
+	//_hex_print(exponent1, 2048 / 8);
+
 
 	BIGNUM* exponent2BN = rsakey8->pkey.rsa->dmq1;
 	CK_BYTE exponent2[2048 / 8];
 	BN_bn2bin(exponent2BN, exponent2);
 
+	//_hex_print(exponent2, 2048 / 8);
+
+
 	BIGNUM* coefficientBN = rsakey8->pkey.rsa->iqmp;
 	CK_BYTE coefficient[2048 / 8];
 	BN_bn2bin(coefficientBN, coefficient);
+
+	//_hex_print(coefficient, 2048 / 8);
+
 
 	// Write key to token
 	CK_OBJECT_HANDLE hKey;
@@ -156,6 +165,7 @@ int TokenKey::importKeyOnToken(const char * fileName, const char*password)
 	OpenSSL_add_all_algorithms();
 	OpenSSL_add_all_ciphers();
 
+
 	EVP_PKEY* rsakey8 = _readPrivateKeyPKCS8(fileName, 0, password);
 	CK_RV rv;
 
@@ -166,9 +176,25 @@ int TokenKey::importKeyOnToken(const char * fileName, const char*password)
 	{
 		rv = importRSAKeyToToken(this->library, this->tokenSession, rsakey8);
 
+	EVP_PKEY* rsakey = _readPrivateKey(fileName, 0, password);
+	CK_RV rv;
+
+	// Decide what type of key is
+	switch (EVP_PKEY_id(rsakey))
+	{
+	case EVP_PKEY_RSA:
+	{
+		rv = importRSAKeyToToken(this->library, this->tokenSession, rsakey);
+
+
 		if (rv == CKR_OK) {
 			printf("\nKey imported");
 		}
+
+		else {
+			printf("\nKey import failed");
+		}
+
 		
 		break;
 	}
@@ -178,3 +204,4 @@ int TokenKey::importKeyOnToken(const char * fileName, const char*password)
 
 	return rv;
 }
+

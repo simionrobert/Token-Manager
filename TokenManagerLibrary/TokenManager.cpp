@@ -88,47 +88,7 @@ int TokenManager::initializePIN(char * NEWp11PinCode)
 	}
 	printf("	OK");
 	return 1;
-}
 
-int TokenManager::ChangePINAsUser(char * OLDp11PinCode, char * NEWp11PinCode)
-{
-	int rv;
-	printf("\nSchimbare pin.............ca utilizator ");
-	char*PIN = "123qwe!@#QWE";
-	char *newPIN = "123qwe!@#$qwe";
-	USHORT oldPinLen = strlen(PIN);
-
-
-	USHORT newPinLen = strlen(newPIN);
-
-	rv = this->library->getFunctionList()->C_SetPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)PIN, oldPinLen, (CK_CHAR_PTR)newPIN, newPinLen);
-	if (rv != CKR_OK) {
-		printf("EROARE la schibmare pin (0x%08X)", rv);
-		return 0;
-	}
-	printf("OK");
-	return 1;
-
-}
-
-int TokenManager::ChangePINAsSO(char * OLDp11PinCode, char * NEWp11PinCode)
-{
-	int rv;
-	printf("\nSchimbare pin.............ca SO ");
-	char*PIN = "123qwe!@#QWE";
-	char *newPIN = "1234567890";
-	USHORT oldPinLen = strlen(PIN);
-
-
-	USHORT newPinLen = strlen(newPIN);
-
-	rv = this->library->getFunctionList()->C_SetPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)PIN, oldPinLen, (CK_CHAR_PTR)newPIN, newPinLen);
-	if (rv != CKR_OK) {
-		printf("EROARE la schibmare pin (0x%08X)", rv);
-		return 0;
-	}
-	printf("OK");
-	return 1;
 }
 
 
@@ -233,4 +193,46 @@ TokenObject **TokenManager::getObjects()
 size_t TokenManager::getObjectCount()
 {
 	return objectCount;
+
+}
+
+int TokenManager::ChangePINAsUser(char * OLDp11PinCode, char * NEWp11PinCode)
+{
+	int rv;
+	printf("\nSchimbare pin.............ca utilizator ");
+	char*PIN = "123qwe!@#QWE";
+	char *newPIN = "123qwe!@#$qwe";
+	USHORT oldPinLen = strlen(PIN);
+
+
+	USHORT newPinLen = strlen(newPIN);
+
+	rv = this->library->getFunctionList()->C_SetPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)PIN, oldPinLen, (CK_CHAR_PTR)newPIN, newPinLen);
+	if (rv != CKR_OK) {
+		printf("EROARE la schibmare pin (0x%08X)", rv);
+		return 0;
+	}
+	printf("OK");
+	return 1;
+
+}
+
+int TokenManager::ChangePINAsSO(char * OLDp11PinCode, char * NEWp11PinCode)
+{
+	int rv;
+	printf("\nSchimbare pin.............ca SO ");
+	char*PIN = "123qwe!@#QWE";
+	char *newPIN = "1234567890";
+	USHORT oldPinLen = strlen(PIN);
+
+
+	USHORT newPinLen = strlen(newPIN);
+
+	rv = this->library->getFunctionList()->C_SetPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)PIN, oldPinLen, (CK_CHAR_PTR)newPIN, newPinLen);
+	if (rv != CKR_OK) {
+		printf("EROARE la schibmare pin (0x%08X)", rv);
+		return 0;
+	}
+	printf("OK");
+	return 1;
 }

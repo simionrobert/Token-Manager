@@ -89,12 +89,18 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Projects\VS\TokenManager_v1\TokenManagerLibrary;C:\Users\zolly\Source\Repos\Token-Manager\TokenManagerLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+
+      <AdditionalIncludeDirectories>C:\Users\zolly\Source\Repos\Token-Manager\TokenManagerLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+
       <AdditionalLibraryDirectories>C:\Projects\VS\TokenManager_v1\Debug;C:\Users\zolly\Source\Repos\Token-Manager\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+
+      <AdditionalLibraryDirectories>C:\Users\zolly\Source\Repos\Token-Manager\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+
       <AdditionalDependencies>TokenManagerLibrary.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -110,7 +116,11 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+
       <AdditionalLibraryDirectories>C:\Projects\VS\TokenManager_v1\Debug;C:\Users\zolly\Source\Repos\Token-Manager\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+
+      <AdditionalLibraryDirectories>C:\Users\zolly\Source\Repos\Token-Manager\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+
       <AdditionalDependencies>TokenManagerLibrary.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

@@ -12,6 +12,10 @@ Acest header il folosim in aplicatia principala sau de test
 #include "TokenSession.h"
 #include "TokenManager.h"
 #include "TokenKey.h"
+
 #include "TokenObject.h"
+
+#include "RegistryManager.h"
+
 
 #endif

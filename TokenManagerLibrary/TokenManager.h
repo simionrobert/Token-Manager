@@ -10,6 +10,12 @@
 Pentru tudor
 */
 
+
+
+/*
+Pentru tudor
+*/
+
 class TKN_API TokenManager { 
 
 private:
@@ -20,12 +26,15 @@ private:
 	CK_FUNCTION_LIST_PTR pFunctionList;
 
 
+
 	/*
 	Certs
 	*/
 
 	TokenObject **objectList = NULL;
 	size_t objectCount = 0;
+
+
 
 public:
 	TokenManager(PKCS11Library* library, TokenSlot* tokenSlot, TokenSession* session);
@@ -40,12 +49,14 @@ public:
 	int initializePIN(char *NEWp11PinCode);
 
 
+
 	//////////////////////////////////////////////////////////////////////////
 	///////////////////////////ded//////////////////////////////////////////
 
 	CK_RV retrieveTokenObjects();
 	TokenObject** getObjects();
 	size_t getObjectCount();
+
 
 };
 
