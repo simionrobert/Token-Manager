@@ -79,7 +79,7 @@ CK_FUNCTION_LIST_PTR PKCS11Library::getFunctionList()
 	return NULL;
 }
 
-CK_VOID_PTR PKCS11Library::getFunction(LPCSTR functionName)
+CK_VOID_PTR PKCS11Library::getFunction(char* functionName)
 {
 	return GetProcAddress(hDll, functionName);
 }

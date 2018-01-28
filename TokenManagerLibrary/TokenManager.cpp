@@ -305,8 +305,8 @@ int TokenManager::formatToken(char* SOPIN, char* label, char* newPIN)
 int TokenManager::changePINasUSER(char*userPIN,char*newPIN)
 {
 	//return CKR_OK if ok; else return sth !=CKR_OK
-	this->tokenSession->openSession();
-	this->tokenSession->authentificateAsUser(userPIN);
+	/*this->tokenSession->openSession();
+	this->tokenSession->authentificateAsUser(userPIN);*/
 	this->ChangePINAsUser(userPIN, newPIN);
 	return 1;
 }
@@ -314,8 +314,8 @@ int TokenManager::changePINasUSER(char*userPIN,char*newPIN)
 int TokenManager::changePINasSO(char*soPIN, char*newPIN)
 {
 	//return CKR_OK if ok; else return sth !=CKR_OK
-	this->tokenSession->openSession();
-	this->tokenSession->authentificateAsSO(soPIN);
+	/*this->tokenSession->openSession();
+	this->tokenSession->authentificateAsSO(soPIN);*/
 	this->ChangePINAsSO(soPIN, newPIN);
 	return 1;
 }
