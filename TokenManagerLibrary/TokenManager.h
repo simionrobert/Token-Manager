@@ -18,13 +18,19 @@ private:
 	PKCS11Library*	library;
 	TokenSlot*		tokenSlot;
 	TokenSession*	tokenSession;
+	CK_FUNCTION_LIST_PTR pFunctionList;
 
 public:
 	TokenManager(PKCS11Library* library, TokenSlot* tokenSlot, TokenSession* session);
 
+	int ChangePINAsUser(char *OLDp11PinCode, char *NEWp11PinCode);
+	int ChangePINAsSO(char *OLDp11PinCode, char *NEWp11PinCode);
 	int formatToken();
-	int changePIN();
+	int changePINasUSER();
+	int changePINasSO();
 	int unblockPIN();
+	int initializeToken(char *p11PinCodeSO);
+	int initializePIN(char *NEWp11PinCode);
 };
 
 

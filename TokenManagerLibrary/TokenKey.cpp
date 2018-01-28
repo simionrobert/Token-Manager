@@ -4,7 +4,7 @@
 
 #include"openssl\rsa.h"
 #include"openssl\pem.h"
-#include "openssl\bn.h"
+#include"openssl\bn.h"
 
 TokenKey::TokenKey(PKCS11Library*	library, TokenSession *	tokenSession)
 {
