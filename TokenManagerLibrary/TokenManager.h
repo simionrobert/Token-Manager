@@ -25,11 +25,11 @@ public:
 
 	int ChangePINAsUser(char *OLDp11PinCode, char *NEWp11PinCode);
 	int ChangePINAsSO(char *OLDp11PinCode, char *NEWp11PinCode);
-	int formatToken();
-	int changePINasUSER();
-	int changePINasSO();
-	int unblockPIN();
-	int initializeToken(char *p11PinCodeSO);
+	int formatToken(char*,char*,char*);
+	int changePINasUSER(char*,char*);
+	int changePINasSO(char*,char*);
+	int unblockPIN(char*,char*);
+	int initializeToken(char *p11PinCodeSO,char* label);
 	int initializePIN(char *NEWp11PinCode);
 };
 
