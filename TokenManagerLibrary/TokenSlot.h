@@ -11,7 +11,9 @@ class TKN_API TokenSlot {
 
 private:
 	PKCS11Library*	library;
-	CK_SLOT_ID_PTR	pSlotList = NULL;
+
+    CK_SLOT_ID_PTR	pSlotList;
+
 	CK_ULONG		ulSlotCount;
 
 

@@ -9,9 +9,11 @@
 class TKN_API PKCS11Library {
 private:
 
-	HINSTANCE static		hDll;
-	CK_FUNCTION_LIST_PTR	pFunctionList = NULL;
-	CK_C_GetFunctionList	pC_GetFunctionList = NULL; 
+    HINSTANCE				hDll;
+
+    CK_FUNCTION_LIST_PTR	pFunctionList;
+    CK_C_GetFunctionList	pC_GetFunctionList ;
+
 
 public:
 

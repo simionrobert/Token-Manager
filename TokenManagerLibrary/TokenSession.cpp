@@ -52,8 +52,8 @@ int TokenSession::authentificateAsUser(char *p11PinCode)
 
 {
 
+	printf(p11PinCode);
 	// loghez sesiunea(dau codul PIN)
-	p11PinCode = "123qwe!@#QWE";
 
 	CK_RV	rv;
 	CK_FUNCTION_LIST_PTR pFunctionList = library->getFunctionList();
