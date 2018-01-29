@@ -182,6 +182,7 @@ int RegistryManager::readValueFromRegistry(HKEY hKeyRoot,const char* keyName, co
 	HKEY hKey = openRegistryKey(hKeyRoot,keyName);
 	if (hKey == NULL) {
 		printf("\nKey does not exist\n");
+		valueData = NULL;
 		return 1;
 	}
 
@@ -226,6 +227,7 @@ int RegistryManager::readValueFromRegistry(HKEY hKeyRoot,const char* keyName, co
 	}
 	else {
 		printf("\nRegQueryValueEx failed (%d)\n", dwRet);
+		valueData = NULL;
 		return dwRet;
 	}
 		
