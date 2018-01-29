@@ -7,6 +7,10 @@
 #include "TokenSession.h"
 #include "TokenObject.h"
 #include "RegistryManager.h"
+
+#include "ObjectPrivateKey.h"
+#include "ObjectSymmetricKey.h"
+#include "ObjectCertificate.h"
 /*
 Pentru tudor
 */
@@ -22,11 +26,22 @@ private:
 
 
 	/*
-	Certs
+	Objects
 	*/
 
-    ObjectCertificate **certList ;
-    size_t certCount ;
+	ObjectCertificate **certList; //certificates
+	size_t certCount;
+
+	ObjectPrivateKey **keyList; //private keys
+	size_t keyCount;
+
+	ObjectSymmetricKey **symmetricKeyList; //symmetric keys
+	size_t sKeyCount;
+
+	CK_RV retrieveCerts();
+	CK_RV retrievePrivateKeys();
+	CK_RV retrieveSymmetricKeys();
+
 
 public:
 	TokenManager(PKCS11Library* library, TokenSlot* tokenSlot, TokenSession* session);
@@ -41,13 +56,7 @@ public:
 	int initializePIN(char *NEWp11PinCode);
 
 
-	//////////////////////////////////////////////////////////////////////////
-	///////////////////////////ded//////////////////////////////////////////
-
-	CK_RV retrieveTokenObjects();
-	ObjectCertificate** getCertificates();
-	size_t getCertificatesCount();
-
+	
 
 	int numaraObiecteCertificat(CK_SESSION_HANDLE		hSession);
 	CK_OBJECT_HANDLE_PTR getObiecteCertificat(CK_SESSION_HANDLE		hSession);
@@ -55,7 +64,24 @@ public:
 	void final();
 
 	void getPFXfromFile(char* filePath, char* parola);
-	void ExportCertificat(CK_OBJECT_HANDLE handle, CK_SESSION_HANDLE session, char* filePath);
+	
+
+	//////////////////////////////////////////////////////////////////////////
+	///////////////////////////ded//////////////////////////////////////////
+
+	CK_RV retrieveTokenObjects();
+	ObjectCertificate** getCertificates();
+	size_t getCertificatesCount();
+
+	ObjectPrivateKey** getKeys();
+	size_t getKeysCount();
+
+	ObjectSymmetricKey **getSymmetricKeys();
+	size_t getSymmetricKeysCount();
+
+	CK_RV deleteObject(unsigned int i);
+
+
 };
 
 
