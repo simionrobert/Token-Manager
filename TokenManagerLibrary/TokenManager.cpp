@@ -860,3 +860,39 @@ CK_RV TokenManager::deleteObject(unsigned int i)
 	rv = pFunctionList->C_DestroyObject(this->tokenSession->getSession(), i);
 	return rv;
 }
+
+void scrieCertificat(BYTE* pvalue, int val_len, char* nume_fisier) {
+
+	FILE *fp;
+	errno_t err;
+
+	if ((err = fopen_s(&fp, nume_fisier, "wb")) != 0)
+		printf("File was not opened\n");
+	else
+	{
+		for (int j = 0; j < val_len; j++)
+		{
+			fprintf(fp, "%c", pvalue[j]);
+		}
+	}
+
+	fclose(fp);
+
+
+}
+
+
+
+void TokenManager::ExportCertificat(CK_OBJECT_HANDLE handle, CK_SESSION_HANDLE session, char* filePath) {
+
+	CK_ATTRIBUTE templateValue[] = {
+		{ CKA_VALUE, NULL , 0 }
+	};
+
+	CK_ATTRIBUTE* atribute = getAttribute(handle, session, templateValue, 1);
+
+	scrieCertificat((BYTE*)atribute[0].pValue, atribute[0].ulValueLen, filePath);
+
+
+}
+

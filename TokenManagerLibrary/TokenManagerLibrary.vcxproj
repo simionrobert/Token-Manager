@@ -173,6 +173,9 @@
     <ClCompile Include="cToken.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="ObjectCertificate.cpp" />
+    <ClCompile Include="ObjectKey.cpp" />
+    <ClCompile Include="ObjectPrivateKey.cpp" />
+    <ClCompile Include="ObjectSymmetricKey.cpp" />
     <ClCompile Include="PKCS11Library.cpp" />
     <ClCompile Include="RegistryManager.cpp" />
     <ClCompile Include="stdafx.cpp">
