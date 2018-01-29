@@ -27,10 +27,10 @@ private:
 	char *pem;
 
 
-
+	
 public:
 
-	ObjectCertificate(CK_SESSION_HANDLE session, CK_OBJECT_HANDLE obj);
+	ObjectCertificate(CK_SESSION_HANDLE session,CK_OBJECT_HANDLE obj);
 
 	char* getPublicKey();
 	char* getSubject();
@@ -41,6 +41,8 @@ public:
 	char *getValidityPeriod();
 	char *getPem();
 
+	CK_OBJECT_HANDLE getObjectId();
+	
 
 
 };
