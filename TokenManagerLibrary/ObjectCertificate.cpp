@@ -49,6 +49,11 @@ char * ObjectCertificate::getPem()
 	return pem;
 }
 
+CK_OBJECT_HANDLE ObjectCertificate::getObjectId()
+{
+	return hObject;
+}
+
 
 
 char* parsePublicKey(X509 *cert)
@@ -70,7 +75,7 @@ char* parsePublicKey(X509 *cert)
 	if (pubkey_algonid == NID_rsaEncryption || pubkey_algonid == NID_dsa) {
 
 		EVP_PKEY *pkey = X509_get_pubkey(cert);
-
+		
 		assert(pkey != NULL, "unable to extract public key from certificate");
 
 		RSA *rsa_key;
@@ -92,7 +97,7 @@ char* parsePublicKey(X509 *cert)
 				assert(rsa_n_hex != NULL, "unable to extract rsa modulus");
 
 				pubKey = (char*)malloc(30 + strlen(rsa_n_hex) + strlen(rsa_e_dec));
-				sprintf(pubKey, "\n\tPublic Exponent: %s\t\n\tModulus: %s", rsa_e_dec, rsa_n_hex);
+				sprintf(pubKey, "Public Exponent: %s\nModulus: %s", rsa_e_dec, rsa_n_hex);
 				return pubKey;
 				break;
 
@@ -165,7 +170,7 @@ char * parseVersion(X509 *cert)
 	char *buf = (char*)malloc(15);
 	int version = ((int)X509_get_version(cert)) + 1;
 
-	sprintf(buf, "Version: %d", version);
+	sprintf(buf, "%d", version);
 	return buf;
 
 }
@@ -216,7 +221,7 @@ char * parseValidityPeriod(X509 *cert) {
 	convert_ASN1TIME(not_before, not_before_str, 128);
 	not_before_str[strlen(not_after_str)] = '\0';
 	validityPeriod = (char*)malloc(strlen(not_after_str) + strlen(not_before_str) + 30);
-	sprintf(validityPeriod, "\n\t\tNot before:%s\n\t\tNot after:%s\0", not_before_str, not_after_str);
+	sprintf(validityPeriod, "%s - %s\0", not_before_str, not_after_str);
 	return validityPeriod;
 
 }
@@ -290,7 +295,7 @@ ObjectCertificate::ObjectCertificate(CK_SESSION_HANDLE session, CK_OBJECT_HANDLE
 
 
 
-
+	
 	publicKey = parsePublicKey(cert);
 	subject = parseSubject(cert);
 	issuer = parseIssuer(cert);
