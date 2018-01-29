@@ -99,8 +99,8 @@ int importRSAKeyToToken(PKCS11Library * library, TokenSession* tokenSession, EVP
 	CK_OBJECT_HANDLE hKey;
 	CK_OBJECT_CLASS kClass = CKO_PRIVATE_KEY;
 	CK_KEY_TYPE keyType = CKK_RSA;
-	CK_UTF8CHAR label[] = "An RSA private key object";
-	CK_BYTE subject[] = "No subject";
+	CK_UTF8CHAR label[] = "RSA Private Key";
+	CK_BYTE subject[] = "RSA Key";
 	CK_BYTE id[] = { 123 };
 	CK_BBOOL fTrue = TRUE;
 
