@@ -153,7 +153,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="cryptoki.h" />
+    <ClInclude Include="cToken.h" />
     <ClInclude Include="defined_tkn_mgr_header.h" />
+    <ClInclude Include="ObjectCertificate.h" />
     <ClInclude Include="pkcs11.h" />
     <ClInclude Include="pkcs11f.h" />
     <ClInclude Include="PKCS11Library.h" />
@@ -168,7 +170,9 @@
     <ClInclude Include="TokenSlot.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cToken.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="ObjectCertificate.cpp" />
     <ClCompile Include="PKCS11Library.cpp" />
     <ClCompile Include="RegistryManager.cpp" />
     <ClCompile Include="stdafx.cpp">
