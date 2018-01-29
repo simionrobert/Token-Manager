@@ -14,4 +14,7 @@ Acest header il folosim in aplicatia principala sau de test
 #include "TokenKey.h"
 #include "TokenObject.h"
 #include "cToken.h"
+#include "ServiceManager.h"
+
+
 #endif

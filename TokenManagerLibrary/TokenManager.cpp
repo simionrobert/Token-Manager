@@ -17,13 +17,13 @@ TokenManager::TokenManager(PKCS11Library * library, TokenSlot * tokenSlot, Token
 
 	certList = NULL;
 	certCount = 0;
-	assert(library != NULL);
+	//assert(library != NULL);
 	this->library = library;
 	this->tokenSlot = tokenSlot;
 	this->tokenSession = session;
 
 	this->pFunctionList = library->getFunctionList();
-	assert(this->pFunctionList != NULL);
+	//assert(this->pFunctionList != NULL);
 
 }
 

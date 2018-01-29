@@ -161,6 +161,7 @@
     <ClInclude Include="PKCS11Library.h" />
     <ClInclude Include="pkcs11t.h" />
     <ClInclude Include="RegistryManager.h" />
+    <ClInclude Include="ServiceManager.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TokenKey.h" />
@@ -175,6 +176,7 @@
     <ClCompile Include="ObjectCertificate.cpp" />
     <ClCompile Include="PKCS11Library.cpp" />
     <ClCompile Include="RegistryManager.cpp" />
+    <ClCompile Include="ServiceManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
