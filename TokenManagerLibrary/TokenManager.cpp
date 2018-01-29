@@ -209,7 +209,7 @@ void TokenManager::final() {
 			rv = pFunctionList->C_GetSlotInfo(slotID, &slotInfo);
 			if (slotInfo.flags & CKF_TOKEN_PRESENT)
 			{
-				rv = this->tokenSession->openSession();
+				rv = this->tokenSession->openSession(0);
 				if (rv != 0)
 					goto err;
 
@@ -294,12 +294,12 @@ err:
 }
 
 
-int TokenManager::formatToken(char* SOPIN, char* label, char* newPIN)
+int TokenManager::formatToken(char* SOPIN, char* label, char* newPIN,int slotToken)
 {
 	//return CKR_OK if ok; else return sth !=CKR_OK
-	this->initializeToken(SOPIN, label);
-	this->tokenSession->openSession();
-	this->tokenSession->authentificateAsSO(SOPIN);
+	this->initializeToken(SOPIN, label, slotToken);
+	this->tokenSession->openSession(slotToken);
+	this->tokenSession->authentificateAsSO(SOPIN, slotToken);
 	this->initializePIN(newPIN);
 	return 1;
 }
@@ -322,23 +322,23 @@ int TokenManager::changePINasSO(char*soPIN, char*newPIN)
 	return 1;
 }
 
-int TokenManager::unblockPIN(char* soPIN,char*newPIN)
+int TokenManager::unblockPIN(char* soPIN,char*newPIN,int slotTokenNumber)
 {
 	//return CKR_OK if ok; else return sth !=CKR_OK
-	this->tokenSession->openSession();
-	this->tokenSession->authentificateAsSO(soPIN);
+	this->tokenSession->openSession(slotTokenNumber);
+	this->tokenSession->authentificateAsSO(soPIN, slotTokenNumber);
 	this->initializePIN(newPIN);
 	return 1;
 }
 
-int TokenManager::initializeToken(char *p11PinCodeSO,char* label)
+int TokenManager::initializeToken(char *p11PinCodeSO,char* label,int tokenSlotNumber)
 {
 	CK_SLOT_ID_PTR pSlotList = tokenSlot->getSlotList();
 	printf("\nInitializare token.......... ");
 	int rv;
 
 	USHORT pinLen = strlen(p11PinCodeSO);
-	rv = this->library->getFunctionList()->C_InitToken(pSlotList[0], (CK_CHAR_PTR)p11PinCodeSO, pinLen, (CK_UTF8CHAR_PTR)label);
+	rv = this->library->getFunctionList()->C_InitToken(pSlotList[tokenSlotNumber], (CK_CHAR_PTR)p11PinCodeSO, pinLen, (CK_UTF8CHAR_PTR)label);
 	if (rv != CKR_OK)
 	{
 		printf(" EROARE (status = 0x%08X)", rv);

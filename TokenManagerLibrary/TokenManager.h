@@ -33,11 +33,11 @@ public:
 
 	int ChangePINAsUser(char *OLDp11PinCode, char *NEWp11PinCode);
 	int ChangePINAsSO(char *OLDp11PinCode, char *NEWp11PinCode);
-	int formatToken(char* SOPIN, char* label, char* newPIN);
+	int formatToken(char* SOPIN, char* label, char* newPIN,int);
 	int changePINasUSER(char*userPIN, char*newPIN);
 	int changePINasSO(char*soPIN, char*newPIN);
-	int unblockPIN(char* soPIN, char*newPIN);
-	int initializeToken(char *p11PinCodeSO, char* label);
+	int unblockPIN(char* soPIN, char*newPIN,int);
+	int initializeToken(char *p11PinCodeSO, char* label,int tokenNumber);
 	int initializePIN(char *NEWp11PinCode);
 
 
