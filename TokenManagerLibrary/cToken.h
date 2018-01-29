@@ -1,10 +1,12 @@
 
+#ifndef CTOKEN_H
+#define CTOKEN_H
 
-#include "stdafx.h"
-#define EXPORTING_DLL
+
+#include "defined_tkn_mgr_header.h"
 #include "cryptoki.h"
 
-class cToken {
+class TKN_API cToken {
 
 private:
 
@@ -41,3 +43,5 @@ public:
 
 
 };
+
+#endif

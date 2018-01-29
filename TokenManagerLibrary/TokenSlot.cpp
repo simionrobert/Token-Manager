@@ -1,10 +1,12 @@
 #include "stdafx.h"
 #define EXPORTING_DLL
 #include "TokenSlot.h"
-
+#include "cryptoki.h"
 
 TokenSlot::TokenSlot(PKCS11Library* library)
 {
+	tokens = NULL;
+	tokenCount = 0;
 	this->library = library;
 }
 
@@ -105,5 +107,33 @@ CK_SLOT_ID_PTR TokenSlot::getSlotList()
 		return NULL;
 	}
 
+	CK_TOKEN_INFO *tokenInfo = (CK_TOKEN_INFO*)malloc(ulSlotCount * sizeof(CK_TOKEN_INFO));
+
+	for (unsigned int i = 0; i < ulSlotCount; i++)
+	{
+		pFunctionList->C_GetTokenInfo(pSlotList[i], &tokenInfo[i]);
+
+		if (tokens == NULL)
+		{
+			tokens = (cToken**)malloc(ulSlotCount * sizeof(cToken));
+
+		}
+		tokens[i] = (cToken*)malloc(sizeof(cToken));
+		tokens[i] = new cToken(*tokenInfo);
+
+		//		printf("%s", listToken(tokenInfo));
+
+	}
+	tokenCount = ulSlotCount;
 	return pSlotList;
+}
+
+cToken ** TokenSlot::getTokens()
+{
+	return tokens;
+}
+
+size_t TokenSlot::getTokensCount()
+{
+	return tokenCount;
 }
