@@ -15,8 +15,8 @@
 TokenManager::TokenManager(PKCS11Library * library, TokenSlot * tokenSlot, TokenSession * session)
 {
 
-	objectList = NULL;
-	objectCount = 0;
+	certList = NULL;
+	certCount = 0;
 	assert(library != NULL);
 	this->library = library;
 	this->tokenSlot = tokenSlot;
@@ -116,6 +116,8 @@ CK_OBJECT_HANDLE* TokenManager::getObiecteCertificat(CK_SESSION_HANDLE		hSession
 
 	return certificate;
 }
+
+
 CK_ATTRIBUTE* TokenManager::getAttribute(CK_OBJECT_HANDLE hObject, CK_SESSION_HANDLE session, CK_ATTRIBUTE* templateAttributeInitial, int len)
 {
 	CK_RV rv;
@@ -207,7 +209,7 @@ void TokenManager::final() {
 			rv = pFunctionList->C_GetSlotInfo(slotID, &slotInfo);
 			if (slotInfo.flags & CKF_TOKEN_PRESENT)
 			{
-				rv = this->tokenSession->openSession();
+				rv = this->tokenSession->openSession(0);
 				if (rv != 0)
 					goto err;
 
@@ -292,52 +294,51 @@ err:
 }
 
 
-int TokenManager::formatToken()
+int TokenManager::formatToken(char* SOPIN, char* label, char* newPIN,int slotToken)
 {
 	//return CKR_OK if ok; else return sth !=CKR_OK
-	this->initializeToken("test");
-	this->tokenSession->openSession();
-	this->tokenSession->authentificateAsSO("test");
-	this->initializePIN("test");
+	this->initializeToken(SOPIN, label, slotToken);
+	this->tokenSession->openSession(slotToken);
+	this->tokenSession->authentificateAsSO(SOPIN, slotToken);
+	this->initializePIN(newPIN);
 	return 1;
 }
 
-int TokenManager::changePINasUSER()
+int TokenManager::changePINasUSER(char*userPIN,char*newPIN)
 {
 	//return CKR_OK if ok; else return sth !=CKR_OK
-	this->tokenSession->openSession();
-	this->tokenSession->authentificateAsUser("test");
-	this->ChangePINAsUser("test", "Test");
+	/*this->tokenSession->openSession();
+	this->tokenSession->authentificateAsUser(userPIN);*/
+	this->ChangePINAsUser(userPIN, newPIN);
 	return 1;
 }
 
-int TokenManager::changePINasSO()
+int TokenManager::changePINasSO(char*soPIN, char*newPIN)
 {
 	//return CKR_OK if ok; else return sth !=CKR_OK
-	this->tokenSession->openSession();
-	this->tokenSession->authentificateAsSO("test");
-	this->ChangePINAsSO("test", "Test");
+	/*this->tokenSession->openSession();
+	this->tokenSession->authentificateAsSO(soPIN);*/
+	this->ChangePINAsSO(soPIN, newPIN);
 	return 1;
 }
 
-int TokenManager::unblockPIN()
+int TokenManager::unblockPIN(char* soPIN,char*newPIN,int slotTokenNumber)
 {
 	//return CKR_OK if ok; else return sth !=CKR_OK
-	this->tokenSession->openSession();
-	this->tokenSession->authentificateAsSO("test");
-	this->initializePIN("test");
+	this->tokenSession->openSession(slotTokenNumber);
+	this->tokenSession->authentificateAsSO(soPIN, slotTokenNumber);
+	this->initializePIN(newPIN);
 	return 1;
 }
 
-int TokenManager::initializeToken(char *p11PinCodeSO)
+int TokenManager::initializeToken(char *p11PinCodeSO,char* label,int tokenSlotNumber)
 {
 	CK_SLOT_ID_PTR pSlotList = tokenSlot->getSlotList();
 	printf("\nInitializare token.......... ");
 	int rv;
-	char*label = "new TOKEN";
-	char* PIN = "123qwe!@#QWE";
-	USHORT pinLen = strlen(PIN);
-	rv = this->library->getFunctionList()->C_InitToken(pSlotList[0], (CK_CHAR_PTR)PIN, pinLen, (CK_UTF8CHAR_PTR)label);
+
+	USHORT pinLen = strlen(p11PinCodeSO);
+	rv = this->library->getFunctionList()->C_InitToken(pSlotList[tokenSlotNumber], (CK_CHAR_PTR)p11PinCodeSO, pinLen, (CK_UTF8CHAR_PTR)label);
 	if (rv != CKR_OK)
 	{
 		printf(" EROARE (status = 0x%08X)", rv);
@@ -351,10 +352,10 @@ int TokenManager::initializePIN(char * NEWp11PinCode)
 {
 	//sa fiu logat ca so intai
 	int rv;
-	char* PIN = "123qwe!@#";
+	
 	printf("\nInitializare PIN dupa initializarea tokenului..........");
-	USHORT pinLen = strlen(PIN);
-	rv = this->library->getFunctionList()->C_InitPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)PIN, pinLen);
+	USHORT pinLen = strlen(NEWp11PinCode);
+	rv = this->library->getFunctionList()->C_InitPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)NEWp11PinCode, pinLen);
 	if (rv != CKR_OK)
 	{
 		printf("EROARE  (status = 0x%08X)", rv);
@@ -368,14 +369,13 @@ int TokenManager::ChangePINAsUser(char * OLDp11PinCode, char * NEWp11PinCode)
 {
 	int rv;
 	printf("\nSchimbare pin.............ca utilizator ");
-	char*PIN = "123qwe!@#QWE";
-	char *newPIN = "123qwe!@#$qwe";
-	USHORT oldPinLen = strlen(PIN);
+
+	USHORT oldPinLen = strlen(OLDp11PinCode);
 
 
-	USHORT newPinLen = strlen(newPIN);
+	USHORT newPinLen = strlen(NEWp11PinCode);
 
-	rv = this->library->getFunctionList()->C_SetPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)PIN, oldPinLen, (CK_CHAR_PTR)newPIN, newPinLen);
+	rv = this->library->getFunctionList()->C_SetPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)OLDp11PinCode, oldPinLen, (CK_CHAR_PTR)NEWp11PinCode, newPinLen);
 	if (rv != CKR_OK) {
 		printf("EROARE la schibmare pin (0x%08X)", rv);
 		return 0;
@@ -389,14 +389,13 @@ int TokenManager::ChangePINAsSO(char * OLDp11PinCode, char * NEWp11PinCode)
 {
 	int rv;
 	printf("\nSchimbare pin.............ca SO ");
-	char*PIN = "123qwe!@#QWE";
-	char *newPIN = "1234567890";
-	USHORT oldPinLen = strlen(PIN);
+
+	USHORT oldPinLen = strlen(OLDp11PinCode);
 
 
-	USHORT newPinLen = strlen(newPIN);
+	USHORT newPinLen = strlen(NEWp11PinCode);
 
-	rv = this->library->getFunctionList()->C_SetPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)PIN, oldPinLen, (CK_CHAR_PTR)newPIN, newPinLen);
+	rv = this->library->getFunctionList()->C_SetPIN(this->tokenSession->getSession(), (CK_CHAR_PTR)OLDp11PinCode, oldPinLen, (CK_CHAR_PTR)NEWp11PinCode, newPinLen);
 	if (rv != CKR_OK) {
 		printf("EROARE la schibmare pin (0x%08X)", rv);
 		return 0;
@@ -409,9 +408,12 @@ int TokenManager::ChangePINAsSO(char * OLDp11PinCode, char * NEWp11PinCode)
 
 CK_RV TokenManager::retrieveTokenObjects() {
 
+	//Retrieve certs
+	//Retrieve keys
+	//etc
+
+
 	CK_RV rv = CKR_OK;
-
-
 
 	CK_OBJECT_CLASS		certClass = CKO_CERTIFICATE;
 	CK_CERTIFICATE_TYPE certType = CKC_X_509;
@@ -473,19 +475,19 @@ CK_RV TokenManager::retrieveTokenObjects() {
 		printf("\nRetrieving object %d...", i);
 
 
-		if (objectList == NULL)
+		if (certList == NULL)
 		{
-			objectList = (TokenObject**)malloc(objectFound * sizeof(TokenObject*));
-		}			
-		
-		assert(objectList != NULL_PTR);
+			certList = (ObjectCertificate**)malloc(objectFound * sizeof(ObjectCertificate*));
+		}
 
-		objectList[i] = (TokenObject *)malloc(sizeof(TokenObject));
-		objectList[i] = new TokenObject(tokenSession->getSession(), hObject[i]);
-			
-		
+		assert(certList != NULL_PTR);
+
+		certList[i] = (ObjectCertificate *)malloc(sizeof(ObjectCertificate));
+		certList[i] = new ObjectCertificate(tokenSession->getSession(), hObject[i]);
+
+
 	}
-	objectCount = objectFound;
+	certCount = objectFound;
 	printf("\nClosing finding session...");
 	rv = this->pFunctionList->C_FindObjectsFinal(tokenSession->getSession());
 	if (rv != CKR_OK)
@@ -497,14 +499,16 @@ CK_RV TokenManager::retrieveTokenObjects() {
 	printf("OK");
 
 
+
+
 }
 
-TokenObject **TokenManager::getObjects()
+ObjectCertificate **TokenManager::getCertificates()
 {
-	return objectList;
+	return certList;
 }
 
-size_t TokenManager::getObjectCount()
+size_t TokenManager::getCertificatesCount()
 {
-	return objectCount;
+	return certCount;
 }

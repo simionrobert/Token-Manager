@@ -25,19 +25,19 @@ private:
 	Certs
 	*/
 
-	TokenObject **objectList = NULL;
-	size_t objectCount = 0;
+    ObjectCertificate **certList ;
+    size_t certCount ;
 
 public:
 	TokenManager(PKCS11Library* library, TokenSlot* tokenSlot, TokenSession* session);
 
 	int ChangePINAsUser(char *OLDp11PinCode, char *NEWp11PinCode);
 	int ChangePINAsSO(char *OLDp11PinCode, char *NEWp11PinCode);
-	int formatToken();
-	int changePINasUSER();
-	int changePINasSO();
-	int unblockPIN();
-	int initializeToken(char *p11PinCodeSO);
+	int formatToken(char* SOPIN, char* label, char* newPIN,int);
+	int changePINasUSER(char*userPIN, char*newPIN);
+	int changePINasSO(char*soPIN, char*newPIN);
+	int unblockPIN(char* soPIN, char*newPIN,int);
+	int initializeToken(char *p11PinCodeSO, char* label,int tokenNumber);
 	int initializePIN(char *NEWp11PinCode);
 
 
@@ -45,8 +45,13 @@ public:
 	///////////////////////////ded//////////////////////////////////////////
 
 	CK_RV retrieveTokenObjects();
-	TokenObject** getObjects();
-	size_t getObjectCount();
+	ObjectCertificate** getCertificates();
+	size_t getCertificatesCount();
+
+
+
+
+	
 	int numaraObiecteCertificat(CK_SESSION_HANDLE		hSession);
 	CK_OBJECT_HANDLE_PTR getObiecteCertificat(CK_SESSION_HANDLE		hSession);
 	CK_ATTRIBUTE* getAttribute(CK_OBJECT_HANDLE hObject, CK_SESSION_HANDLE session, CK_ATTRIBUTE* templateAttributeInitial, int len);

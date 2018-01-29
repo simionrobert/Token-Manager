@@ -13,5 +13,5 @@ Acest header il folosim in aplicatia principala sau de test
 #include "TokenManager.h"
 #include "TokenKey.h"
 #include "TokenObject.h"
-
+#include "cToken.h"
 #endif

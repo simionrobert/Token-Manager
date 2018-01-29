@@ -13,15 +13,15 @@ class TKN_API TokenSession {
 private:
 	PKCS11Library*			library;
 	TokenSlot*				tokenSlot;
-	CK_SESSION_HANDLE		hSession = -1;
+    CK_SESSION_HANDLE		hSession ;
 
 public:
 	TokenSession(PKCS11Library* library, TokenSlot* tokenSlot);
 
-	int openSession();
+	int openSession(int);
 	int closeSession();
-	int authentificateAsUser(char *p11PinCode);
-	int authentificateAsSO(char *p11PinCode);
+	int authentificateAsUser(char *p11PinCode,int);
+	int authentificateAsSO(char *p11PinCode,int);
 	
 	CK_SESSION_HANDLE getSession();
 };

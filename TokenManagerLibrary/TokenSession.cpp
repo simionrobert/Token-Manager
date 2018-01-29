@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #define EXPORTING_DLL
 #include "TokenSession.h"
+#include "TokenSlot.h"
 
 
 TokenSession::TokenSession(PKCS11Library * library, TokenSlot* tokenSlot)
@@ -10,7 +11,7 @@ TokenSession::TokenSession(PKCS11Library * library, TokenSlot* tokenSlot)
 	this->hSession = NULL;
 }
 
-int TokenSession::openSession()
+int TokenSession::openSession(int tokenSlotNumber)
 {
 	if(hSession!=NULL){
 		return hSession;
@@ -25,7 +26,7 @@ int TokenSession::openSession()
 		return CKR_DATA_INVALID;
 	
 	printf("\nDeschidere sesiune PKCS11 de lucru pe token.....");
-	rv = pFunctionList->C_OpenSession(pSlotList[0], CKF_RW_SESSION | CKF_SERIAL_SESSION, NULL, NULL, &hSession);
+	rv = pFunctionList->C_OpenSession(pSlotList[tokenSlotNumber], CKF_RW_SESSION | CKF_SERIAL_SESSION, NULL, NULL, &hSession);
 	if (rv != CKR_OK)
 	{
 		printf("EROARE");
@@ -50,16 +51,14 @@ int TokenSession::closeSession()
 	return CKR_OK;
 }
 
-int TokenSession::authentificateAsUser(char *p11PinCode)
-
+int TokenSession::authentificateAsUser(char *p11PinCode,int tokenNumber)
 {
-	// loghez sesiunea(dau codul PIN)
-	//p11PinCode = "123qwe!@#QWE";
+
 	CK_RV	rv;
 	CK_FUNCTION_LIST_PTR pFunctionList = library->getFunctionList();
 
 	if (hSession == NULL) {
-		this->openSession();
+		this->openSession(tokenNumber);
 	}
 
 	if (pFunctionList == NULL) {
@@ -84,11 +83,11 @@ int TokenSession::authentificateAsUser(char *p11PinCode)
 	return CKR_ARGUMENTS_BAD;
 }
 
-int TokenSession::authentificateAsSO(char *p11PinCode) {
+int TokenSession::authentificateAsSO(char *p11PinCode,int tokenNumber) {
 	int rv;
 	
 	if (hSession == NULL) {
-		this->openSession();
+		this->openSession(tokenNumber);
 	}
 	CK_FUNCTION_LIST_PTR pFunctionList = library->getFunctionList();
 
@@ -96,11 +95,11 @@ int TokenSession::authentificateAsSO(char *p11PinCode) {
 		return CKR_CRYPTOKI_NOT_INITIALIZED;
 	}
 	printf("\nAutentificare.............ca SO ");
-	//ca pin am p11PinCode
-	char* PIN = "123qwe!@#QWE";
-	USHORT pinLen = strlen(PIN);
+	
+	
+	USHORT pinLen = strlen(p11PinCode);
 
-	rv = (pFunctionList)->C_Login(hSession, CKU_SO, (CK_CHAR_PTR)PIN, pinLen);
+	rv = (pFunctionList)->C_Login(hSession, CKU_SO, (CK_CHAR_PTR)p11PinCode, pinLen);
 	if (rv != CKR_OK && (rv != CKR_USER_ALREADY_LOGGED_IN)) {
 		printf("  EROARE (0x%08X)");
 		return 0;

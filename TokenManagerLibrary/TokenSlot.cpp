@@ -1,16 +1,19 @@
 #include "stdafx.h"
 #define EXPORTING_DLL
 #include "TokenSlot.h"
-
+#include "cryptoki.h"
 
 TokenSlot::TokenSlot(PKCS11Library* library)
 {
+	tokens = NULL;
+	tokenCount = -1;
 	this->library = library;
+	this->TokenSlotNumber = 0;
 }
 
 int TokenSlot::asteaptaToken()
 {
-		CK_RV	rv;
+	CK_RV	rv;
 		CK_FLAGS flags = 0;
 		CK_SLOT_ID slotID;
 		CK_SLOT_INFO slotInfo;
@@ -52,6 +55,21 @@ int TokenSlot::freeTokenSlot()
 	}
 
 	return CKR_OK;
+}
+
+void TokenSlot::set_tokenSlotNumber(int slot)
+{
+	this->TokenSlotNumber = slot;
+}
+
+int TokenSlot::get_token_slot_selected()
+{
+	if (this->TokenSlotNumber == -1) {
+		return 0;
+	}
+	else {
+		return this->TokenSlotNumber;
+	}
 }
 
 CK_SLOT_ID_PTR TokenSlot::getSlotList()
@@ -105,5 +123,35 @@ CK_SLOT_ID_PTR TokenSlot::getSlotList()
 		return NULL;
 	}
 
+	CK_TOKEN_INFO *tokenInfo = (CK_TOKEN_INFO*)malloc(ulSlotCount * sizeof(CK_TOKEN_INFO));
+
+	for (unsigned int i = 0; i < ulSlotCount; i++)
+	{
+		pFunctionList->C_GetTokenInfo(pSlotList[i], &tokenInfo[i]);
+
+		if (tokens == NULL)
+		{
+			tokens = (cToken**)malloc(ulSlotCount * sizeof(cToken));
+
+		}
+		tokens[i] = (cToken*)malloc(sizeof(cToken));
+		tokens[i] = new cToken(*tokenInfo);
+
+		//		printf("%s", listToken(tokenInfo));
+
+	}
+	tokenCount = ulSlotCount;
 	return pSlotList;
 }
+
+cToken ** TokenSlot::getTokens()
+{
+	return tokens;
+}
+
+size_t TokenSlot::getTokensCount()
+{
+	return tokenCount;
+}
+
+

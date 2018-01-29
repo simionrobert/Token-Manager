@@ -10,15 +10,15 @@ class TKN_API PKCS11Library {
 private:
 
 	HINSTANCE static		hDll;
-	CK_FUNCTION_LIST_PTR	pFunctionList = NULL;
-	CK_C_GetFunctionList	pC_GetFunctionList = NULL; 
+    CK_FUNCTION_LIST_PTR	pFunctionList ;
+    CK_C_GetFunctionList	pC_GetFunctionList ;
 
 public:
 
 	int incarcaLibrarie(char* numeLibrarie);
 	int freeLibrarie();
 	CK_FUNCTION_LIST_PTR getFunctionList();
-	CK_VOID_PTR static getFunction(LPCSTR functionName);
+    CK_VOID_PTR static getFunction(char* functionName);
 	
 };
 

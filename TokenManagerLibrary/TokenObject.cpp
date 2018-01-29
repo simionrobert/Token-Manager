@@ -169,7 +169,7 @@ CK_RV TokenObject::getCertObject() {
 
 
 	//Decode Raw Cert Data to X509
-	cert = new ObjectCertificate((char*)value, value_len);
+	//cert = new ObjectCertificate((char*)value, value_len);
 	
 	return CKR_OK;
 
