@@ -66,10 +66,10 @@
     <ClInclude Include="RegistryManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectCertificate.h">
+    <ClInclude Include="cToken.h">
       <Filter>Header Files\classes</Filter>
     </ClInclude>
-    <ClInclude Include="TokenObject.h">
+    <ClInclude Include="ObjectCertificate.h">
       <Filter>Header Files\classes</Filter>
     </ClInclude>
   </ItemGroup>
@@ -102,9 +102,6 @@
       <Filter>Source Files\classes</Filter>
     </ClCompile>
     <ClCompile Include="ObjectCertificate.cpp">
-      <Filter>Source Files\classes</Filter>
-    </ClCompile>
-    <ClCompile Include="TokenObject.cpp">
       <Filter>Source Files\classes</Filter>
     </ClCompile>
   </ItemGroup>

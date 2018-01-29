@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #define EXPORTING_DLL
 #include "TokenSession.h"
+#include "TokenSlot.h"
 
 
 TokenSession::TokenSession(PKCS11Library * library, TokenSlot* tokenSlot)
@@ -10,7 +11,7 @@ TokenSession::TokenSession(PKCS11Library * library, TokenSlot* tokenSlot)
 	this->hSession = NULL;
 }
 
-int TokenSession::openSession()
+int TokenSession::openSession(int tokenSlotNumber)
 {
 	if(hSession!=NULL){
 		return hSession;
@@ -25,7 +26,7 @@ int TokenSession::openSession()
 		return CKR_DATA_INVALID;
 	
 	printf("\nDeschidere sesiune PKCS11 de lucru pe token.....");
-	rv = pFunctionList->C_OpenSession(pSlotList[0], CKF_RW_SESSION | CKF_SERIAL_SESSION, NULL, NULL, &hSession);
+	rv = pFunctionList->C_OpenSession(pSlotList[tokenSlotNumber], CKF_RW_SESSION | CKF_SERIAL_SESSION, NULL, NULL, &hSession);
 	if (rv != CKR_OK)
 	{
 		printf("EROARE");
@@ -50,14 +51,14 @@ int TokenSession::closeSession()
 	return CKR_OK;
 }
 
-int TokenSession::authentificateAsUser(char *p11PinCode)
+int TokenSession::authentificateAsUser(char *p11PinCode,int tokenNumber)
 {
 
 	CK_RV	rv;
 	CK_FUNCTION_LIST_PTR pFunctionList = library->getFunctionList();
 
 	if (hSession == NULL) {
-		this->openSession();
+		this->openSession(tokenNumber);
 	}
 
 	if (pFunctionList == NULL) {
@@ -82,11 +83,11 @@ int TokenSession::authentificateAsUser(char *p11PinCode)
 	return CKR_ARGUMENTS_BAD;
 }
 
-int TokenSession::authentificateAsSO(char *p11PinCode) {
+int TokenSession::authentificateAsSO(char *p11PinCode,int tokenNumber) {
 	int rv;
 	
 	if (hSession == NULL) {
-		this->openSession();
+		this->openSession(tokenNumber);
 	}
 	CK_FUNCTION_LIST_PTR pFunctionList = library->getFunctionList();
 

@@ -6,13 +6,14 @@
 TokenSlot::TokenSlot(PKCS11Library* library)
 {
 	tokens = NULL;
-	tokenCount = 0;
+	tokenCount = -1;
 	this->library = library;
+	this->TokenSlotNumber = 0;
 }
 
 int TokenSlot::asteaptaToken()
 {
-		CK_RV	rv;
+	CK_RV	rv;
 		CK_FLAGS flags = 0;
 		CK_SLOT_ID slotID;
 		CK_SLOT_INFO slotInfo;
@@ -54,6 +55,21 @@ int TokenSlot::freeTokenSlot()
 	}
 
 	return CKR_OK;
+}
+
+void TokenSlot::set_tokenSlotNumber(int slot)
+{
+	this->TokenSlotNumber = slot;
+}
+
+int TokenSlot::get_token_slot_selected()
+{
+	if (this->TokenSlotNumber == -1) {
+		return 0;
+	}
+	else {
+		return this->TokenSlotNumber;
+	}
 }
 
 CK_SLOT_ID_PTR TokenSlot::getSlotList()
@@ -137,3 +153,5 @@ size_t TokenSlot::getTokensCount()
 {
 	return tokenCount;
 }
+
+

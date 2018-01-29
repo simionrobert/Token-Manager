@@ -6,7 +6,7 @@
 #include <cryptuiapi.h>
 #include <tchar.h>
 #include <winscard.h>
-
+#include <io.h>
 #pragma comment (lib, "crypt32.lib")
 #pragma comment (lib, "cryptui.lib")
 
@@ -209,7 +209,7 @@ void TokenManager::final() {
 			rv = pFunctionList->C_GetSlotInfo(slotID, &slotInfo);
 			if (slotInfo.flags & CKF_TOKEN_PRESENT)
 			{
-				rv = this->tokenSession->openSession();
+				rv = this->tokenSession->openSession(0);
 				if (rv != 0)
 					goto err;
 
@@ -294,12 +294,12 @@ err:
 }
 
 
-int TokenManager::formatToken(char* SOPIN, char* label, char* newPIN)
+int TokenManager::formatToken(char* SOPIN, char* label, char* newPIN,int slotToken)
 {
 	//return CKR_OK if ok; else return sth !=CKR_OK
-	this->initializeToken(SOPIN, label);
-	this->tokenSession->openSession();
-	this->tokenSession->authentificateAsSO(SOPIN);
+	this->initializeToken(SOPIN, label, slotToken);
+	this->tokenSession->openSession(slotToken);
+	this->tokenSession->authentificateAsSO(SOPIN, slotToken);
 	this->initializePIN(newPIN);
 	return 1;
 }
@@ -322,23 +322,23 @@ int TokenManager::changePINasSO(char*soPIN, char*newPIN)
 	return 1;
 }
 
-int TokenManager::unblockPIN(char* soPIN,char*newPIN)
+int TokenManager::unblockPIN(char* soPIN,char*newPIN,int slotTokenNumber)
 {
 	//return CKR_OK if ok; else return sth !=CKR_OK
-	this->tokenSession->openSession();
-	this->tokenSession->authentificateAsSO(soPIN);
+	this->tokenSession->openSession(slotTokenNumber);
+	this->tokenSession->authentificateAsSO(soPIN, slotTokenNumber);
 	this->initializePIN(newPIN);
 	return 1;
 }
 
-int TokenManager::initializeToken(char *p11PinCodeSO,char* label)
+int TokenManager::initializeToken(char *p11PinCodeSO,char* label,int tokenSlotNumber)
 {
 	CK_SLOT_ID_PTR pSlotList = tokenSlot->getSlotList();
 	printf("\nInitializare token.......... ");
 	int rv;
 
 	USHORT pinLen = strlen(p11PinCodeSO);
-	rv = this->library->getFunctionList()->C_InitToken(pSlotList[0], (CK_CHAR_PTR)p11PinCodeSO, pinLen, (CK_UTF8CHAR_PTR)label);
+	rv = this->library->getFunctionList()->C_InitToken(pSlotList[tokenSlotNumber], (CK_CHAR_PTR)p11PinCodeSO, pinLen, (CK_UTF8CHAR_PTR)label);
 	if (rv != CKR_OK)
 	{
 		printf(" EROARE (status = 0x%08X)", rv);
@@ -511,4 +511,183 @@ ObjectCertificate **TokenManager::getCertificates()
 size_t TokenManager::getCertificatesCount()
 {
 	return certCount;
+}
+
+BOOL LoadPrivateKey(LPBYTE pbBlob, DWORD cbSize, PCCERT_CONTEXT pCertContext, CHAR szContainerName[1024])
+{
+	DWORD dwLen = 0;
+	HCRYPTPROV hProv;
+	BOOL bRet = CryptAcquireContext(&hProv, NULL, MS_SCARD_PROV, PROV_RSA_FULL, CRYPT_NEWKEYSET);
+	if (bRet)
+	{
+		// get the container name
+		dwLen = 1024;
+		CryptGetProvParam(hProv, PP_CONTAINER, (BYTE*)szContainerName, &dwLen, 0);
+
+		HCRYPTKEY hKey;
+		bRet = CryptImportKey(hProv, pbBlob, cbSize, NULL, 0, &hKey);
+		if (bRet)
+		{
+			bRet = CryptSetKeyParam(hKey, KP_CERTIFICATE, pCertContext->pbCertEncoded, 0);
+			if (!bRet)
+			{
+				DWORD dwError = GetLastError();
+				_tprintf(_T("Failed to import the certificate into the smart card. Error 0x%.8X\n"), dwError);
+			}
+
+			CryptDestroyKey(hKey);
+		}
+		else
+		{
+			DWORD dwError = GetLastError();
+			_tprintf(_T("Failed to import the private key into the smart card. Error 0x%.8X\n"), dwError);
+		}
+
+		CryptReleaseContext(hProv, 0);
+
+		if (!bRet)
+		{
+			// delete the container because of the error
+			CryptAcquireContextA(&hProv, szContainerName, MS_SCARD_PROV_A, PROV_RSA_FULL, CRYPT_DELETEKEYSET);
+		}
+	}
+	else
+	{
+		DWORD dwError = GetLastError();
+		_tprintf(_T("Failed to create a new container on the smart card. Error 0x%.8X\n"), dwError);
+	}
+
+	return bRet;
+}
+
+void TokenManager::getPFXfromFile(char* filePath,char* parola) {
+
+	PCCERT_CONTEXT   pCertContext = NULL;
+	char pszNameString[256];
+
+	void*            pvData;
+	DWORD            cbData;
+	DWORD            dwPropId = 0;
+	LPWSTR szPassword = NULL;
+	size_t passLen = 0;
+
+	int lungimeParola = strlen(parola);
+	wchar_t* wtext = (wchar_t*)malloc((lungimeParola + 1) * sizeof(wchar_t));
+	mbstowcs(wtext, parola, lungimeParola + 1);//Plus null
+	szPassword = wtext;
+
+	
+	passLen = wcslen(szPassword) + 1;
+
+	// Parse the P12 file
+	FILE* pfxFile = _tfopen(filePath, _T("rb"));
+	if (!pfxFile)
+	{
+		_tprintf(_T("Failed to open P12 file for reading\n"));
+		return;
+	}
+
+	long pfxLength = _filelength(_fileno(pfxFile));
+	LPBYTE pbPfxData = (LPBYTE)LocalAlloc(0, pfxLength);
+	fread(pbPfxData, 1, pfxLength, pfxFile);
+	fclose(pfxFile);
+
+	// Decrypt the content of the PFX file
+	CRYPT_DATA_BLOB pfxBlob;
+	pfxBlob.cbData = pfxLength;
+	pfxBlob.pbData = pbPfxData;
+
+	HCERTSTORE hPfxStore = PFXImportCertStore(&pfxBlob, szPassword, CRYPT_EXPORTABLE);
+	if (!hPfxStore)
+	{
+		if (wcslen(szPassword) == 0)
+		{
+			// Empty password case. Try with NULL as advised by MSDN
+			hPfxStore = PFXImportCertStore(&pfxBlob, NULL, CRYPT_EXPORTABLE);
+		}
+	}
+
+	if (!hPfxStore)
+	{
+		_tprintf(_T("Failed to decrypt P12 file content. Please check you typed the correct password"));
+		return;
+	}
+
+	// Enumerate all certificate on the PFX file
+	DWORD dwCertsLoaded = 0;
+	DWORD cbSize = 0;
+	PCRYPT_KEY_PROV_INFO pKeyInfo = NULL;
+	LPTSTR szValue = NULL;
+
+	while ((pCertContext = CertEnumCertificatesInStore(hPfxStore, pCertContext)))
+	{
+		CertGetNameString(pCertContext,
+			CERT_NAME_SIMPLE_DISPLAY_TYPE, 0, NULL, pszNameString, 128);
+		printf("Certificate name: %s\n", pszNameString);
+
+		//LUAM COMPONENTELE CHEII (PCRYPTT_KEY_PROV_INFO)
+
+		DWORD dwSize = 0;
+		BOOL bIsSuccess = CertGetCertificateContextProperty(pCertContext,
+			CERT_KEY_PROV_INFO_PROP_ID,
+			NULL,
+			&dwSize);
+		PCRYPT_KEY_PROV_INFO pKeyProvInfo = (PCRYPT_KEY_PROV_INFO)LocalAlloc(LMEM_ZEROINIT, dwSize);
+		bIsSuccess = CertGetCertificateContextProperty(pCertContext,
+			CERT_KEY_PROV_INFO_PROP_ID,
+			pKeyProvInfo,
+			&dwSize);
+
+		HCRYPTPROV hProv = NULL;
+		HCRYPTKEY hKey = NULL;
+		BOOL bStatus = CryptAcquireContextW(&hProv,
+			pKeyProvInfo->pwszContainerName,
+			pKeyProvInfo->pwszProvName,
+			pKeyProvInfo->dwProvType,
+			pKeyProvInfo->dwFlags);
+		if (bStatus)
+		{
+			bStatus = CryptGetUserKey(hProv, pKeyProvInfo->dwKeySpec, &hKey);
+			if (bStatus)
+			{
+				bStatus = CryptExportKey(hKey, NULL, PRIVATEKEYBLOB, 0, NULL, &dwSize);
+				if (bStatus)
+				{
+					LPBYTE pbBlob = (LPBYTE)LocalAlloc(0, dwSize);
+					bStatus = CryptExportKey(hKey, NULL, PRIVATEKEYBLOB, 0, pbBlob, &dwSize);
+					if (bStatus)
+					{
+						CHAR szContainerName[1024] = { 0 };
+						if (LoadPrivateKey(pbBlob, dwSize, pCertContext, szContainerName))
+						{
+							//DisplayCertificate(pCertContext, szContainerName, ++dwCertsLoaded);
+							printf("Merge ba!\n\n");
+						}
+						else
+						{
+							printf("Boom a headshot!\n\n");
+						}
+					}
+					SecureZeroMemory(pbBlob, dwSize);
+					LocalFree(pbBlob);
+				}
+
+				CryptDestroyKey(hKey);
+			}
+			CryptReleaseContext(hProv, 0);
+
+			// Delete the key and its container from disk
+			// We don't want the key to be persistant
+			CryptAcquireContextW(&hProv,
+				pKeyProvInfo->pwszContainerName,
+				pKeyProvInfo->pwszProvName,
+				pKeyProvInfo->dwProvType,
+				CRYPT_DELETEKEYSET);
+		}
+		DWORD err = GetLastError();
+		printf("%02x\n", err);
+		LocalFree(pKeyProvInfo);
+
+	}
+
 }

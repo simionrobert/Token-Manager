@@ -60,7 +60,7 @@ EVP_PKEY * _readPrivateKeyPKCS8(const char * keyFile, bool isPublic, const char 
 }
 
 int importRSAKeyToToken(PKCS11Library * library, TokenSession* tokenSession, EVP_PKEY* rsakey8) {
-
+	
 	BIGNUM* modulusBN = rsakey8->pkey.rsa->n;
 	CK_BYTE modulus[2048 / 8];
 	BN_bn2bin(modulusBN, modulus);
@@ -99,8 +99,8 @@ int importRSAKeyToToken(PKCS11Library * library, TokenSession* tokenSession, EVP
 	CK_OBJECT_HANDLE hKey;
 	CK_OBJECT_CLASS kClass = CKO_PRIVATE_KEY;
 	CK_KEY_TYPE keyType = CKK_RSA;
-	CK_UTF8CHAR label[] = "An RSA private key object";
-	CK_BYTE subject[] = "No subject";
+	CK_UTF8CHAR label[] = "RSA Private Key";
+	CK_BYTE subject[] = "RSA Key";
 	CK_BYTE id[] = { 123 };
 	CK_BBOOL fTrue = TRUE;
 

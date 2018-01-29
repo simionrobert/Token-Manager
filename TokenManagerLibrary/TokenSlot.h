@@ -10,6 +10,7 @@
 class TKN_API TokenSlot {
 
 private:
+	int TokenSlotNumber;
 	PKCS11Library*	library;
     CK_SLOT_ID_PTR	pSlotList ;
 	CK_ULONG		ulSlotCount;
@@ -22,7 +23,8 @@ public:
 	TokenSlot(PKCS11Library* library);
 	int asteaptaToken();
 	int freeTokenSlot();
-
+	void set_tokenSlotNumber(int);
+	int get_token_slot_selected();
 	CK_SLOT_ID_PTR getSlotList();
 
 
