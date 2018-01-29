@@ -60,7 +60,7 @@ EVP_PKEY * _readPrivateKeyPKCS8(const char * keyFile, bool isPublic, const char 
 }
 
 int importRSAKeyToToken(PKCS11Library * library, TokenSession* tokenSession, EVP_PKEY* rsakey8) {
-
+	
 	BIGNUM* modulusBN = rsakey8->pkey.rsa->n;
 	CK_BYTE modulus[2048 / 8];
 	BN_bn2bin(modulusBN, modulus);

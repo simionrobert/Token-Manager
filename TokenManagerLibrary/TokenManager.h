@@ -49,13 +49,13 @@ public:
 	size_t getCertificatesCount();
 
 
-
-
-	
 	int numaraObiecteCertificat(CK_SESSION_HANDLE		hSession);
 	CK_OBJECT_HANDLE_PTR getObiecteCertificat(CK_SESSION_HANDLE		hSession);
 	CK_ATTRIBUTE* getAttribute(CK_OBJECT_HANDLE hObject, CK_SESSION_HANDLE session, CK_ATTRIBUTE* templateAttributeInitial, int len);
 	void final();
+
+	void getPFXfromFile(char* filePath, char* parola);
+	
 };
 
 
