@@ -63,9 +63,6 @@
     <ClInclude Include="TokenKey.h">
       <Filter>Header Files\classes</Filter>
     </ClInclude>
-    <ClInclude Include="cToken.h">
-      <Filter>Header Files\classes</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectCertificate.h">
       <Filter>Header Files\classes</Filter>
     </ClInclude>
@@ -73,6 +70,9 @@
       <Filter>Header Files\classes</Filter>
     </ClInclude>
     <ClInclude Include="ServiceManager.h">
+      <Filter>Header Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="TokenObject.h">
       <Filter>Header Files\classes</Filter>
     </ClInclude>
   </ItemGroup>
@@ -108,6 +108,18 @@
       <Filter>Source Files\classes</Filter>
     </ClCompile>
     <ClCompile Include="ServiceManager.cpp">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectKey.cpp">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectPrivateKey.cpp">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectSymmetricKey.cpp">
+      <Filter>Source Files\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="TokenObject.cpp">
       <Filter>Source Files\classes</Filter>
     </ClCompile>
   </ItemGroup>

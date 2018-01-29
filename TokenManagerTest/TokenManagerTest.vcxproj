@@ -23,13 +23,13 @@
     <ProjectGuid>{43D3B29F-7972-4DA9-8196-E799E52F57BC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>TokenManagerTest</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -89,12 +89,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\CURSURI\CURSURI ANUL IV\Securitatea Informatiei\PROIECT!\TogenManager\TokenManagerLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\TokenManagerLibrary;D:\CURSURI\CURSURI ANUL IV\Securitatea Informatiei\PROIECT!\TogenManager\TokenManagerLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\CURSURI\CURSURI ANUL IV\Securitatea Informatiei\PROIECT!\TogenManager\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\Debug;D:\CURSURI\CURSURI ANUL IV\Securitatea Informatiei\PROIECT!\TogenManager\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>TokenManagerLibrary.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -105,12 +105,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\TokenManagerLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\TokenManagerLibrary;C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\TokenManagerLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\zolly\Source\Repos\Token-Manager\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\Debug;C:\Users\zolly\Source\Repos\Token-Manager\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>TokenManagerLibrary.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -123,14 +123,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\TokenManagerLibrary;%(AdditionalIncludeDirectories);C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\TokenManagerLibrary</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\TokenManagerLibrary;C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\TokenManagerLibrary;%(AdditionalIncludeDirectories);C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\TokenManagerLibrary</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\Debug;%(AdditionalLibraryDirectories);C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\Debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\Debug;C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\Debug;%(AdditionalLibraryDirectories);C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\Debug</AdditionalLibraryDirectories>
       <AdditionalDependencies>TokenManagerLibrary.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -143,14 +143,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\TokenManagerLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\TokenManagerLibrary;C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\TokenManagerLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\Debug;C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>TokenManagerLibrary.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
