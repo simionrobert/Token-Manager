@@ -55,7 +55,7 @@ public:
 	void final();
 
 	void getPFXfromFile(char* filePath, char* parola);
-	
+	void ExportCertificat(CK_OBJECT_HANDLE handle, CK_SESSION_HANDLE session, char* filePath);
 };
 
 
