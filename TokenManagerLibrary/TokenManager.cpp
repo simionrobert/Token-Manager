@@ -687,8 +687,10 @@ CK_RV TokenManager::retrievePrivateKeys() {
 
 	CK_RV rv;
 	CK_OBJECT_CLASS keyClass = CKO_PRIVATE_KEY;
+	CK_KEY_TYPE keyType = CKK_RSA;
 	CK_ATTRIBUTE keyTemplate[] = {
-		{ CKA_CLASS, &keyClass, sizeof(keyClass) }
+		{ CKA_CLASS, &keyClass, sizeof(keyClass) },
+	
 	};
 
 	CK_ULONG objectCount;
@@ -852,9 +854,54 @@ size_t TokenManager::getSymmetricKeysCount()
 	return sKeyCount;
 }
 
-CK_RV TokenManager::deleteObject(unsigned int i)
+CK_RV TokenManager::deleteCertificate(unsigned int i)
 {
 
+	CK_RV rv = CKR_OK;
+	CK_ATTRIBUTE templateIDAttribute[] = {
+		{ CKA_ID, NULL , 0 },
+	};
+
+	CK_BYTE_PTR valoare2 = (CK_BYTE_PTR)getAttribute(i, this->tokenSession->getSession(), templateIDAttribute, 1)->pValue;
+	DWORD lenvaloare2 = (DWORD)getAttribute(i, this->tokenSession->getSession(), templateIDAttribute, 1)->ulValueLen;
+	if (lenvaloare2 ==0)	//ESTE CERTIFICAT SIMPLU
+	{
+		rv = pFunctionList->C_DestroyObject(this->tokenSession->getSession(), i);
+		return rv;
+	}
+	else     //ESTE PFX SI TREBUIE SA STERGEM SI CHEIA
+	{
+		ObjectPrivateKey**list = this->keyList;
+		for (int j = 0; j < this->keyCount; j++)
+		{
+			int handleobj = list[j]->getObjectId();
+			CK_ATTRIBUTE templateIDAttributePK[] = {
+				{ CKA_ID, NULL , 0 },
+			};
+
+			CK_BYTE_PTR value = (CK_BYTE_PTR)getAttribute(handleobj, this->tokenSession->getSession(), templateIDAttributePK, 1)->pValue;
+			DWORD lenvalue = (DWORD)getAttribute(handleobj, this->tokenSession->getSession(), templateIDAttributePK, 1)->ulValueLen;
+			if (memcmp(valoare2,value, lenvaloare2)==0)	//ID-UL KEY-ULUI ESTE EGAL CU ID-UL ID-UL CERTIFICATULUI
+			{
+				rv = pFunctionList->C_DestroyObject(this->tokenSession->getSession(), i);
+				rv = deletePrivateKey(handleobj);
+				break;
+			}
+			
+		}
+	}
+	return rv;
+}
+
+CK_RV TokenManager::deletePrivateKey(unsigned int i)
+{
+	CK_RV rv = CKR_OK;
+	rv = pFunctionList->C_DestroyObject(this->tokenSession->getSession(), i);
+	return rv;
+}
+
+CK_RV TokenManager:: deleteSymmetricKey(unsigned int i)
+{
 	CK_RV rv = CKR_OK;
 	rv = pFunctionList->C_DestroyObject(this->tokenSession->getSession(), i);
 	return rv;

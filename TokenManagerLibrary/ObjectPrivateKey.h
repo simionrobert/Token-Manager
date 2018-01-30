@@ -8,7 +8,7 @@
 #include "ObjectKey.h"
 
 
-class TKN_API ObjectPrivateKey : ObjectKey {
+class TKN_API ObjectPrivateKey : public ObjectKey {
 
 private:
 	int size;
@@ -18,9 +18,6 @@ private:
 public:
 
 	ObjectPrivateKey(CK_SESSION_HANDLE session, CK_OBJECT_HANDLE obj);
-
-
-
 	char *getSize();
 	char *getLabel();
 	char *getModulus();

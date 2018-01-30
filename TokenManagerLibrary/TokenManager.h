@@ -79,8 +79,9 @@ public:
 	ObjectSymmetricKey **getSymmetricKeys();
 	size_t getSymmetricKeysCount();
 
-	CK_RV deleteObject(unsigned int i);
-
+	CK_RV deleteCertificate(unsigned int i);
+	CK_RV deletePrivateKey(unsigned int i);
+	CK_RV deleteSymmetricKey(unsigned int i);
 
 };
 

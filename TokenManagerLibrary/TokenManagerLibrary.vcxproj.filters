@@ -75,6 +75,12 @@
     <ClInclude Include="TokenObject.h">
       <Filter>Header Files\classes</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectPrivateKey.h">
+      <Filter>Header Files\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectKey.h">
+      <Filter>Header Files\classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
