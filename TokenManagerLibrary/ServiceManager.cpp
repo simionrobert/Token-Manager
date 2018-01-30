@@ -17,6 +17,6 @@ void ServiceManager::setServiceActivityStatus(bool status)
 		value[1] = '\0';
 	}
 		
-	manager->createRegistryKey(HKEY_LOCAL_MACHINE, "Software\\Wow6432Node\\TokenManager\\SubKeyOne\\SubKeyTwo");
-	manager->setRegistryValue(HKEY_LOCAL_MACHINE, "Software\\Wow6432Node\\TokenManager\\SubKeyOne\\SubKeyTwo", "Service", value, sizeof(value));
+	manager->createRegistryKey(HKEY_LOCAL_MACHINE, "Software\\TokenManager");
+	manager->setRegistryValue(HKEY_LOCAL_MACHINE, "Software\\TokenManager", "Service", value, sizeof(value));
 }

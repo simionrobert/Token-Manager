@@ -10,7 +10,9 @@ HKEY RegistryManager::openRegistryKey(HKEY hKeyRoot,const char* registryName)
 {
 	HKEY hKey;
 
-	if ((RegOpenKeyEx(hKeyRoot, registryName, 0, KEY_ALL_ACCESS, &hKey) != ERROR_SUCCESS)) {
+	int rv = RegOpenKeyEx(hKeyRoot, registryName, 0, KEY_ALL_ACCESS, &hKey);
+
+	if (rv != ERROR_SUCCESS) {
 		printf("\nError opening the desired subkey (doesn't exist?)\n");
 		return NULL;
 	}

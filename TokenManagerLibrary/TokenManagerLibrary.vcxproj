@@ -89,12 +89,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;TOKENMANAGERLIBRARY_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\CURSURI\CURSURI ANUL IV\Securitatea Informatiei\PROIECT!\TogenManager\TokenManagerLibrary\Libraries\Build-OpenSSL-VC-32-dbg\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\zolly\Source\Repos\Token-Manager\TokenManagerLibrary\Libraries\Build-OpenSSL-VC-32-dbg\include;D:\CURSURI\CURSURI ANUL IV\Securitatea Informatiei\PROIECT!\TogenManager\TokenManagerLibrary\Libraries\Build-OpenSSL-VC-32-dbg\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\CURSURI\CURSURI ANUL IV\Securitatea Informatiei\PROIECT!\TogenManager\TokenManagerLibrary\Libraries\Build-OpenSSL-VC-32-dbg\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\zolly\Source\Repos\Token-Manager\TokenManagerLibrary\Libraries\Build-OpenSSL-VC-32-dbg;D:\CURSURI\CURSURI ANUL IV\Securitatea Informatiei\PROIECT!\TogenManager\TokenManagerLibrary\Libraries\Build-OpenSSL-VC-32-dbg\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

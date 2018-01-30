@@ -201,8 +201,11 @@ void TokenManager::final() {
 	TCHAR* valueRead = 0;
 	DWORD valueReadLenght = 0;
 
-	manager->readValueFromRegistry(HKEY_LOCAL_MACHINE, "Software\\Wow6432Node\\TokenManager\\SubKeyOne\\SubKeyTwo", "Service", valueRead, valueReadLenght);
+	manager->readValueFromRegistry(HKEY_LOCAL_MACHINE, "Software\\TokenManager", "Service", valueRead, valueReadLenght);
 
+	if (valueRead == NULL) {
+		manager->readValueFromRegistry(HKEY_LOCAL_MACHINE, "Software\\WOW6432Node\\TokenManager", "Service", valueRead, valueReadLenght);
+	}
 	if (valueRead == NULL)
 		goto err;
 
