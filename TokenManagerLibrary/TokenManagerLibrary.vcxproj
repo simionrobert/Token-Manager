@@ -29,7 +29,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -158,6 +158,9 @@
     <ClInclude Include="cryptoki.h" />
     <ClInclude Include="defined_tkn_mgr_header.h" />
     <ClInclude Include="ObjectCertificate.h" />
+    <ClInclude Include="ObjectKey.h" />
+    <ClInclude Include="ObjectPrivateKey.h" />
+    <ClInclude Include="ObjectSymmetricKey.h" />
     <ClInclude Include="pkcs11.h" />
     <ClInclude Include="pkcs11f.h" />
     <ClInclude Include="PKCS11Library.h" />
