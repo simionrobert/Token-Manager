@@ -44,6 +44,19 @@ char * ObjectCertificate::getValidityPeriod()
 	return validity;
 }
 
+char * ObjectCertificate::getCommonName()
+{
+	char *buffer = _strdup(subject);
+		char *p = strtok(buffer, "/");
+		while (p != NULL) {
+			if (p[0] == 'C' && p[1] == 'N')
+				return p + 3;
+			p = strtok(NULL, "/");
+		}
+		return NULL;
+	
+}
+
 char * ObjectCertificate::getPem()
 {
 	return pem;

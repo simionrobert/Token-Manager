@@ -39,6 +39,7 @@ public:
 	char *getVersion();
 	char* getSignatureAlgo();
 	char *getValidityPeriod();
+	char *getCommonName();
 	char *getPem();
 
 	CK_OBJECT_HANDLE getObjectId();
