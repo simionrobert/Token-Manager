@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#define EXPORTING_DLL
 #include "ServiceManager.h"
 #include "RegistryManager.h"
 

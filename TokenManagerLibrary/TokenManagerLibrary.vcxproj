@@ -160,6 +160,7 @@
     <ClInclude Include="ObjectCertificate.h" />
     <ClInclude Include="ObjectKey.h" />
     <ClInclude Include="ObjectPrivateKey.h" />
+    <ClInclude Include="ObjectSymmetricKey.h" />
     <ClInclude Include="pkcs11.h" />
     <ClInclude Include="pkcs11f.h" />
     <ClInclude Include="PKCS11Library.h" />

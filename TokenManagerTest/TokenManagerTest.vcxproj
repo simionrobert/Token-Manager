@@ -89,12 +89,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\TokenManagerLibrary;D:\CURSURI\CURSURI ANUL IV\Securitatea Informatiei\PROIECT!\TogenManager\TokenManagerLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\zolly\Source\Repos\Token-Manager\TokenManagerLibrary;C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\TokenManagerLibrary;D:\CURSURI\CURSURI ANUL IV\Securitatea Informatiei\PROIECT!\TogenManager\TokenManagerLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\Debug;D:\CURSURI\CURSURI ANUL IV\Securitatea Informatiei\PROIECT!\TogenManager\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\zolly\Source\Repos\Token-Manager\Debug;C:\Users\Baal\Documents\Visual Studio 2017\Projects\TokenManager\Debug;D:\CURSURI\CURSURI ANUL IV\Securitatea Informatiei\PROIECT!\TogenManager\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>TokenManagerLibrary.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

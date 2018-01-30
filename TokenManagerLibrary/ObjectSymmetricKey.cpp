@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#define EXPORTING_DLL
 #include "ObjectSymmetricKey.h"
 #include "openssl/evp.h"
 #include "openssl/pem.h"
