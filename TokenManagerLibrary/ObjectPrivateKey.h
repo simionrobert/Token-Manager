@@ -8,7 +8,7 @@
 #include "ObjectKey.h"
 
 
-class TKN_API ObjectPrivateKey : ObjectKey {
+class TKN_API ObjectPrivateKey : public ObjectKey {
 
 private:
 	int size;

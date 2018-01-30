@@ -8,7 +8,7 @@
 #include "ObjectKey.h"
 
 
-class TKN_API ObjectSymmetricKey : ObjectKey {
+class TKN_API ObjectSymmetricKey : public ObjectKey {
 
 private:
 	size_t size;

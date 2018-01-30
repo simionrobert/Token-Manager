@@ -90,6 +90,8 @@ CK_SLOT_ID_PTR TokenSlot::getSlotList()
 		return NULL;
 	}
 
+	
+
 	if (ulSlotCount == 0)
 	{
 		printf("%d slot(uri)", ulSlotCount);
@@ -107,15 +109,18 @@ CK_SLOT_ID_PTR TokenSlot::getSlotList()
 		return NULL;
 		
 	}
+
+
 	rv = pFunctionList->C_GetSlotList(TRUE, pSlotList, &ulSlotCount);
 	if (rv)
 	{
 		printf("EROARE");
+		
 		return NULL;
 		
 	}
 	printf("gasit %d slot(uri)", ulSlotCount);
-
+	tokenCount = ulSlotCount;
 
 	if (ulSlotCount == 0)
 	{
@@ -135,18 +140,24 @@ CK_SLOT_ID_PTR TokenSlot::getSlotList()
 
 		}
 		tokens[i] = (cToken*)malloc(sizeof(cToken));
-		tokens[i] = new cToken(*tokenInfo);
+		tokens[i] = new cToken(tokenInfo[i]);
 
 		//		printf("%s", listToken(tokenInfo));
 
 	}
-	tokenCount = ulSlotCount;
+	
 	return pSlotList;
 }
 
 cToken ** TokenSlot::getTokens()
 {
-	return tokens;
+	if (getSlotList() != nullptr)
+		return tokens;
+	else
+	{
+		tokenCount = 0;
+		return nullptr;
+	}
 }
 
 size_t TokenSlot::getTokensCount()

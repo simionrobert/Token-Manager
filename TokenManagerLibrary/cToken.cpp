@@ -57,8 +57,8 @@ cToken::cToken(CK_TOKEN_INFO tokenInfo)
 	tokenInfo.utcTime[15] = '\0';
 	sprintf(buff, "%s", tokenInfo.utcTime);
 	newsize = strlen(buff) + 1;
-	this->tokenInfo.label = (char*)realloc(this->tokenInfo.label, newsize);
-	strcpy(this->tokenInfo.label, buff);
+	this->tokenInfo.utcTime = (char*)realloc(this->tokenInfo.utcTime, newsize);
+	strcpy(this->tokenInfo.utcTime, buff);
 	
 
 }

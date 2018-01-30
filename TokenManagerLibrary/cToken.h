@@ -10,10 +10,10 @@ class TKN_API cToken {
 
 private:
 
-		struct info{	
+		struct info{
+		char* label;
 		char* firmwareVersion;
 		char* hardwareVersion;
-		char* label;
 		char* manufacturerId;
 		char *model;
 		char *serialNumber;
