@@ -1,16 +1,19 @@
 
+#ifndef CTOKEN_H
+#define CTOKEN_H
 
-#include "stdafx.h"
-#define EXPORTING_DLL
 
-class cToken {
+#include "defined_tkn_mgr_header.h"
+#include "cryptoki.h"
+
+class TKN_API cToken {
 
 private:
 
-		struct info{	
+		struct info{
+		char* label;
 		char* firmwareVersion;
 		char* hardwareVersion;
-		char* label;
 		char* manufacturerId;
 		char *model;
 		char *serialNumber;
@@ -26,15 +29,11 @@ public:
 
 	char *getHardwareVersion();
 
-
 	char *getLabel();
-
 
 	char *getManufacturerId();
 
-
 	char *getModel();
-
 
 	char *getSerialNumber();
 
@@ -44,3 +43,5 @@ public:
 
 
 };
+
+#endif

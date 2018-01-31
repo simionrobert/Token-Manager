@@ -507,10 +507,10 @@ CK_PKCS11_FUNCTION_INFO(C_DigestUpdate)
 #endif
 
 
-/* C_Digesthisey continues a multi-part message-digesting
+/* C_DigestKey continues a multi-part message-digesting
  * operation, by digesting the value of a secret key as part of
  * the data already digested. */
-CK_PKCS11_FUNCTION_INFO(C_Digesthisey)
+CK_PKCS11_FUNCTION_INFO(C_DigestKey)
 #ifdef CK_NEED_ARG_LIST
 (
   CK_SESSION_HANDLE hSession,  /* the session's handle */
