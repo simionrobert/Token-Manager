@@ -57,13 +57,14 @@ For those who don't have **Open in visual studio** button
 1. Do the same steps described above, but for TokenService.
 
 **How to build for an external project which uses the library**
+
 The same steps described at TokenManagerTest will be done on an external project, including:
 - include in your project TokenManagerLibrary.h from pathToProject\TokenManager\TokenManagerLibrary (it's the same, it's not necessary to copy it)
 
 **Build Notes**:
+
 Error SDK Version: Right click TokenManagerLibrary > Retarget projects. 
 If this doesn't work, try to  Right click TokenManagerLibrary > Properties > General > Platform Toolset and set what toolset you have.
-
 
 Error Platform Toolset: Right click TokenManagerLibrary > Properties > General > Platform Toolset > Select what toolset you have (same for test)
 
