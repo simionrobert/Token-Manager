@@ -68,6 +68,34 @@ If this doesn't work, try to  Right click TokenManagerLibrary > Properties > Gen
 
 Error Platform Toolset: Right click TokenManagerLibrary > Properties > General > Platform Toolset > Select what toolset you have (same for test)
 
+## How to run the Service
+1. Register as a windows service
+- In cmd, write sc.exe create TokenService binPath= "pathToProject\TokenManager\Debug\TokenService.exe"
+
+2. The service must run with the current logged on user rights in order to be able to import the certificates on his behalf:
+- open services.msc
+- find TokenService
+- right click -> Properties -> Log On ->This accout ->Write your account ->Write password ->Apply
+
+3. Start the service from TASK Manager
+- CTRL+SHIFT+ESC, then Services, then right click on TokenService, then Start
+
+4. How to start the service functionality
+```
+ServiceManager* serviceManager = new ServiceManager();
+serviceManager->setServiceActivityStatus(true);
+```
+You can also manually set the register value to 1.
+```
+HKEY_LOCAL_MACHINE\Software\TokenManager\Service. 
+On 64 bit windows, it is HKEY_LOCAL_MACHINE\Software\WOW6432Node\TokenManager\Service
+```
+5. Done
+
+6. Remove Service
+- sc.exe delete TokenService (if not, stop the process)
+
+
 **Aditional notes:**
 If you have some issues referring parts of code in the master branch add them in the issues section.
 
