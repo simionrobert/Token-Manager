@@ -340,6 +340,7 @@ int TokenManager::unblockPIN(char* soPIN,char*newPIN,int slotTokenNumber)
 
 int TokenManager::initializeToken(char *p11PinCodeSO,char* label,int tokenSlotNumber)
 {
+	this->tokenSession->closeSession();
 	CK_SLOT_ID_PTR pSlotList = tokenSlot->getSlotList();
 	printf("\nInitializare token.......... ");
 	int rv;
